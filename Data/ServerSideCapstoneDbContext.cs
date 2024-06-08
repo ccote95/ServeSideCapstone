@@ -57,7 +57,7 @@ public class ServerSideCapstoneDbContext : IdentityDbContext<IdentityUser>
         });
 
         modelBuilder.Entity<Listing>().HasData(
-            new Listing { Id = 1, UserProfileId = 1, ProductImg = "", Content = "Item for sale 1", CreatedOn = DateTime.Now, CategoryId = 1 }
+            new Listing { Id = 1, UserProfileId = 1, ProductImg = "https://m.media-amazon.com/images/I/61DbVExME8L._AC_UF1000,1000_QL80_.jpg", Title = "Ps2 Forsale!", Content = "Item for sale 1", CreatedOn = DateTime.Now.AddDays(3), CategoryId = 1 }
 
         );
 

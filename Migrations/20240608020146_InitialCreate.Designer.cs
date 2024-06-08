@@ -12,7 +12,7 @@ using ServerSideCapstone.Data;
 namespace ServerSideCapstone.Migrations
 {
     [DbContext(typeof(ServerSideCapstoneDbContext))]
-    [Migration("20240608012908_InitialCreate")]
+    [Migration("20240608020146_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -91,6 +91,10 @@ namespace ServerSideCapstone.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<int>("UserProfileId")
                         .HasColumnType("integer");
 
@@ -108,8 +112,9 @@ namespace ServerSideCapstone.Migrations
                             Id = 1,
                             CategoryId = 1,
                             Content = "Item for sale 1",
-                            CreatedOn = new DateTime(2024, 6, 7, 21, 29, 8, 271, DateTimeKind.Local).AddTicks(5731),
-                            ProductImg = "",
+                            CreatedOn = new DateTime(2024, 6, 10, 22, 1, 45, 908, DateTimeKind.Local).AddTicks(7212),
+                            ProductImg = "https://m.media-amazon.com/images/I/61DbVExME8L._AC_UF1000,1000_QL80_.jpg",
+                            Title = "Ps2 Forsale!",
                             UserProfileId = 1
                         });
                 });
@@ -241,13 +246,13 @@ namespace ServerSideCapstone.Migrations
                         {
                             Id = "dbc40bc6-0829-4ac5-a3ed-180f5e916a5f",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "0c42aaad-05ed-441c-928f-845c4db4dcc1",
+                            ConcurrencyStamp = "bb3879c4-09e7-4ab6-a801-1c9b667680cc",
                             Email = "admina@strator.comx",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAEKp1FLhSSlfNctHJvwU/qUycqZyK2j1GSzdtwP6G4TrmsQPTeqFxCRa3yDrNU4Iojg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEPNyHUnnT+AFkpMEVJk4I4xarwT0waCBEp6+YJaiK7Rj52kwmJc3lV3Yz/xFmEBEnw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "7e8e19f4-536c-4d97-94c0-98b7c1f7dc03",
+                            SecurityStamp = "4c7df215-b0ac-439b-9b3f-1c3603496889",
                             TwoFactorEnabled = false,
                             UserName = "Administrator"
                         });

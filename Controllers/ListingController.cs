@@ -25,7 +25,7 @@ public class ListingController : ControllerBase
         {
             Id = l.Id,
             UserProfileId = l.UserProfileId,
-
+            Title = l.Title,
             ProductImg = l.ProductImg,
             Categories = l.Category.ListingCategories.Select(lc => new CategoryNoNavDTO()
             {

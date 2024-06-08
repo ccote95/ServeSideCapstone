@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { getAll } from "../../managers/listingManger.js"
+import { Card, CardBody, CardImg, CardTitle } from "reactstrap"
 
 export default function AllListings()
 {
@@ -9,7 +10,22 @@ export default function AllListings()
     useEffect(() => {
         getAll().then(setListings)
     },[])
+
     return(
-        <div>hello</div>
+        <>
+        {listings.map((l) => (
+            <Card className="w-50 m-auto"  style={{maxWidth: "1200px"}}>
+                <CardImg
+                className="w-25 rounded"
+                src={l.productImg}/>
+                <CardTitle>
+                    {l.userProfile.fullName}
+                </CardTitle>
+                <CardBody>
+                    {l.content}
+                </CardBody>
+            </Card>
+        ))}
+        </>
     )
 }

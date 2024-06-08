@@ -8,6 +8,7 @@ public class Listing
     public int CategoryId { get; set; }
     [Required]
     public int UserProfileId { get; set; }
+    public string Title { get; set; }
     public Category Category { get; set; }
 
     public string ProductImg { get; set; }

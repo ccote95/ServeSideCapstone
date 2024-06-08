@@ -203,6 +203,7 @@ namespace ServerSideCapstone.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     CategoryId = table.Column<int>(type: "integer", nullable: false),
                     UserProfileId = table.Column<int>(type: "integer", nullable: false),
+                    Title = table.Column<string>(type: "text", nullable: false),
                     ProductImg = table.Column<string>(type: "text", nullable: false),
                     Content = table.Column<string>(type: "text", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
@@ -258,7 +259,7 @@ namespace ServerSideCapstone.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "dbc40bc6-0829-4ac5-a3ed-180f5e916a5f", 0, "0c42aaad-05ed-441c-928f-845c4db4dcc1", "admina@strator.comx", false, false, null, null, null, "AQAAAAIAAYagAAAAEKp1FLhSSlfNctHJvwU/qUycqZyK2j1GSzdtwP6G4TrmsQPTeqFxCRa3yDrNU4Iojg==", null, false, "7e8e19f4-536c-4d97-94c0-98b7c1f7dc03", false, "Administrator" });
+                values: new object[] { "dbc40bc6-0829-4ac5-a3ed-180f5e916a5f", 0, "bb3879c4-09e7-4ab6-a801-1c9b667680cc", "admina@strator.comx", false, false, null, null, null, "AQAAAAIAAYagAAAAEPNyHUnnT+AFkpMEVJk4I4xarwT0waCBEp6+YJaiK7Rj52kwmJc3lV3Yz/xFmEBEnw==", null, false, "4c7df215-b0ac-439b-9b3f-1c3603496889", false, "Administrator" });
 
             migrationBuilder.InsertData(
                 table: "Categories",
@@ -284,8 +285,8 @@ namespace ServerSideCapstone.Migrations
 
             migrationBuilder.InsertData(
                 table: "Listing",
-                columns: new[] { "Id", "CategoryId", "Content", "CreatedOn", "ProductImg", "UserProfileId" },
-                values: new object[] { 1, 1, "Item for sale 1", new DateTime(2024, 6, 7, 21, 29, 8, 271, DateTimeKind.Local).AddTicks(5731), "", 1 });
+                columns: new[] { "Id", "CategoryId", "Content", "CreatedOn", "ProductImg", "Title", "UserProfileId" },
+                values: new object[] { 1, 1, "Item for sale 1", new DateTime(2024, 6, 10, 22, 1, 45, 908, DateTimeKind.Local).AddTicks(7212), "https://m.media-amazon.com/images/I/61DbVExME8L._AC_UF1000,1000_QL80_.jpg", "Ps2 Forsale!", 1 });
 
             migrationBuilder.InsertData(
                 table: "ListingCategory",

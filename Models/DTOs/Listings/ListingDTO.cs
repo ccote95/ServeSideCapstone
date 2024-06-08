@@ -12,6 +12,7 @@ public class ListingDTO
     public string ProductImg { get; set; }
     public int CategoryId { get; set; }
     public CategoryDTO category { get; set; }
+    public string Title { get; set; }
 
     [Required]
     public string Content { get; set; }
