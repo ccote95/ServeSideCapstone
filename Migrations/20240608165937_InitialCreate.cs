@@ -251,7 +251,7 @@ namespace ServerSideCapstone.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "dbc40bc6-0829-4ac5-a3ed-180f5e916a5f", 0, "1c0fba1b-4b6a-4ece-af8d-bf0b907665dd", "admina@strator.com", false, false, null, null, null, "AQAAAAIAAYagAAAAEIFB/IecHvnaawWiteuZGzHZfCJhEaU315BnWu1UdbQltIVCCNvi68oWI0xXWAlvtA==", null, false, "881369bf-5c40-4352-80eb-9efbdeebfea4", false, "Administrator" });
+                values: new object[] { "dbc40bc6-0829-4ac5-a3ed-180f5e916a5f", 0, "f3ad8e01-9cc8-4c0a-99e4-60b68244381d", "admina@strator.com", false, false, null, null, null, "AQAAAAIAAYagAAAAEF6qqeS4UCWiCn8syYuFRlmz1P8H8K8D+1bqQ29+z7zheiqBFkwqrLvnpm/aG70liQ==", null, false, "c026ae4b-b5c1-44ad-8d6d-77da9435079b", false, "Administrator" });
 
             migrationBuilder.InsertData(
                 table: "Categories",
@@ -280,10 +280,10 @@ namespace ServerSideCapstone.Migrations
                 columns: new[] { "Id", "Content", "CreatedOn", "Price", "ProductImg", "Title", "UserProfileId" },
                 values: new object[,]
                 {
-                    { 1, "Item for sale 1", new DateTime(2024, 6, 11, 12, 41, 46, 745, DateTimeKind.Local).AddTicks(174), 199.99m, "https://m.media-amazon.com/images/I/61DbVExME8L._AC_UF1000,1000_QL80_.jpg", "Ps2 for sale!", 1 },
-                    { 2, "Brand new smartphone.", new DateTime(2024, 6, 8, 12, 41, 46, 745, DateTimeKind.Local).AddTicks(236), 299.99m, "https://cdn.thewirecutter.com/wp-content/media/2023/10/smartphone-2048px-4861.jpg?auto=webp&quality=75&width=1024", "Smartphone for sale", 1 },
-                    { 3, "Gently used laptop in excellent condition.", new DateTime(2024, 6, 1, 12, 41, 46, 745, DateTimeKind.Local).AddTicks(238), 799.99m, "https://i5.walmartimages.com/seo/HP-Stream-14-Laptop-Intel-Celeron-N4000-4GB-SDRAM-32GB-eMMC-Office-365-1-yr-Brilliant-Black_d579aa66-7e24-4eb2-9686-521be769a755_2.09283250bd5d2a12834c2d4aaca652dd.jpeg", "Laptop for sale", 1 },
-                    { 4, "Hand made wooden table", new DateTime(2024, 6, 5, 12, 41, 46, 745, DateTimeKind.Local).AddTicks(241), 399.99m, "https://i.ebayimg.com/images/g/DasAAOSwZwRj0qTG/s-l1200.webp", "Wooden Table", 1 }
+                    { 1, "Item for sale 1", new DateTime(2024, 6, 11, 12, 59, 37, 269, DateTimeKind.Local).AddTicks(5920), 199.99m, "https://m.media-amazon.com/images/I/61DbVExME8L._AC_UF1000,1000_QL80_.jpg", "Ps2 for sale!", 1 },
+                    { 2, "Brand new smartphone.", new DateTime(2024, 6, 8, 12, 59, 37, 269, DateTimeKind.Local).AddTicks(5970), 299.99m, "https://cdn.thewirecutter.com/wp-content/media/2023/10/smartphone-2048px-4861.jpg?auto=webp&quality=75&width=1024", "Smartphone for sale", 1 },
+                    { 3, "Gently used laptop in excellent condition.", new DateTime(2024, 6, 1, 12, 59, 37, 269, DateTimeKind.Local).AddTicks(5972), 799.99m, "https://i5.walmartimages.com/seo/HP-Stream-14-Laptop-Intel-Celeron-N4000-4GB-SDRAM-32GB-eMMC-Office-365-1-yr-Brilliant-Black_d579aa66-7e24-4eb2-9686-521be769a755_2.09283250bd5d2a12834c2d4aaca652dd.jpeg", "Laptop for sale", 1 },
+                    { 4, "Hand made wooden table", new DateTime(2024, 6, 5, 12, 59, 37, 269, DateTimeKind.Local).AddTicks(5975), 399.99m, "https://i.ebayimg.com/images/g/DasAAOSwZwRj0qTG/s-l1200.webp", "Wooden Table", 1 }
                 });
 
             migrationBuilder.InsertData(
@@ -292,7 +292,9 @@ namespace ServerSideCapstone.Migrations
                 values: new object[,]
                 {
                     { 1, 1 },
-                    { 1, 2 }
+                    { 1, 2 },
+                    { 1, 3 },
+                    { 2, 4 }
                 });
 
             migrationBuilder.CreateIndex(

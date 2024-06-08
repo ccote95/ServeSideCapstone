@@ -18,6 +18,7 @@ export default function AllListings()
             <Card className="w-25 d-flex flex-column  shadow" key={l.id} style={{maxWidth: "1200px"}}>
                 <CardImg
                 className="w-50 m-auto rounded mt-1"
+                style={{maxHeight: "150px"}}
                 src={l.productImg}/>
                 <CardBody>
                 <CardTitle className="m-1 fw-bold">
@@ -26,7 +27,7 @@ export default function AllListings()
                 <CardSubtitle className="m-1">
                     ${l.price}
                 </CardSubtitle>
-                    {l.content}
+                   
                 </CardBody>
             </Card>
         ))}

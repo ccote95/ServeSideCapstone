@@ -106,7 +106,7 @@ namespace ServerSideCapstone.Migrations
                         {
                             Id = 1,
                             Content = "Item for sale 1",
-                            CreatedOn = new DateTime(2024, 6, 11, 12, 41, 46, 745, DateTimeKind.Local).AddTicks(174),
+                            CreatedOn = new DateTime(2024, 6, 11, 12, 59, 37, 269, DateTimeKind.Local).AddTicks(5920),
                             Price = 199.99m,
                             ProductImg = "https://m.media-amazon.com/images/I/61DbVExME8L._AC_UF1000,1000_QL80_.jpg",
                             Title = "Ps2 for sale!",
@@ -116,7 +116,7 @@ namespace ServerSideCapstone.Migrations
                         {
                             Id = 2,
                             Content = "Brand new smartphone.",
-                            CreatedOn = new DateTime(2024, 6, 8, 12, 41, 46, 745, DateTimeKind.Local).AddTicks(236),
+                            CreatedOn = new DateTime(2024, 6, 8, 12, 59, 37, 269, DateTimeKind.Local).AddTicks(5970),
                             Price = 299.99m,
                             ProductImg = "https://cdn.thewirecutter.com/wp-content/media/2023/10/smartphone-2048px-4861.jpg?auto=webp&quality=75&width=1024",
                             Title = "Smartphone for sale",
@@ -126,7 +126,7 @@ namespace ServerSideCapstone.Migrations
                         {
                             Id = 3,
                             Content = "Gently used laptop in excellent condition.",
-                            CreatedOn = new DateTime(2024, 6, 1, 12, 41, 46, 745, DateTimeKind.Local).AddTicks(238),
+                            CreatedOn = new DateTime(2024, 6, 1, 12, 59, 37, 269, DateTimeKind.Local).AddTicks(5972),
                             Price = 799.99m,
                             ProductImg = "https://i5.walmartimages.com/seo/HP-Stream-14-Laptop-Intel-Celeron-N4000-4GB-SDRAM-32GB-eMMC-Office-365-1-yr-Brilliant-Black_d579aa66-7e24-4eb2-9686-521be769a755_2.09283250bd5d2a12834c2d4aaca652dd.jpeg",
                             Title = "Laptop for sale",
@@ -136,7 +136,7 @@ namespace ServerSideCapstone.Migrations
                         {
                             Id = 4,
                             Content = "Hand made wooden table",
-                            CreatedOn = new DateTime(2024, 6, 5, 12, 41, 46, 745, DateTimeKind.Local).AddTicks(241),
+                            CreatedOn = new DateTime(2024, 6, 5, 12, 59, 37, 269, DateTimeKind.Local).AddTicks(5975),
                             Price = 399.99m,
                             ProductImg = "https://i.ebayimg.com/images/g/DasAAOSwZwRj0qTG/s-l1200.webp",
                             Title = "Wooden Table",
@@ -271,13 +271,13 @@ namespace ServerSideCapstone.Migrations
                         {
                             Id = "dbc40bc6-0829-4ac5-a3ed-180f5e916a5f",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "1c0fba1b-4b6a-4ece-af8d-bf0b907665dd",
+                            ConcurrencyStamp = "f3ad8e01-9cc8-4c0a-99e4-60b68244381d",
                             Email = "admina@strator.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAEIFB/IecHvnaawWiteuZGzHZfCJhEaU315BnWu1UdbQltIVCCNvi68oWI0xXWAlvtA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEF6qqeS4UCWiCn8syYuFRlmz1P8H8K8D+1bqQ29+z7zheiqBFkwqrLvnpm/aG70liQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "881369bf-5c40-4352-80eb-9efbdeebfea4",
+                            SecurityStamp = "c026ae4b-b5c1-44ad-8d6d-77da9435079b",
                             TwoFactorEnabled = false,
                             UserName = "Administrator"
                         });
@@ -395,6 +395,16 @@ namespace ServerSideCapstone.Migrations
                         {
                             ListingId = 2,
                             CategoryId = 1
+                        },
+                        new
+                        {
+                            ListingId = 3,
+                            CategoryId = 1
+                        },
+                        new
+                        {
+                            ListingId = 4,
+                            CategoryId = 2
                         });
                 });
 
