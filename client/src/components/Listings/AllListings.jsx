@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { getAll } from "../../managers/listingManger.js"
-import { Card, CardBody, CardImg, CardTitle } from "reactstrap"
+import { Card, CardBody, CardImg, CardSubtitle, CardTitle } from "reactstrap"
 
 export default function AllListings()
 {
@@ -19,8 +19,11 @@ export default function AllListings()
                 className="w-25 rounded"
                 src={l.productImg}/>
                 <CardTitle>
-                    {l.userProfile.fullName}
+                    {l.title}
                 </CardTitle>
+                <CardSubtitle>
+                    {l.price}
+                </CardSubtitle>
                 <CardBody>
                     {l.content}
                 </CardBody>
