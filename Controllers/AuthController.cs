@@ -93,7 +93,7 @@ public class AuthController : ControllerBase
         }
     }
 
-    [HttpGet("Me")]
+    [HttpGet("me")]
     [Authorize]
     public IActionResult Me()
     {
@@ -111,7 +111,8 @@ public class AuthController : ControllerBase
                 IdentityUserId = identityUserId,
                 UserName = User.FindFirstValue(ClaimTypes.Name),
                 Email = User.FindFirstValue(ClaimTypes.Email),
-                Roles = roles
+                Roles = roles,
+                ImgLocation = profile.ImgLocation
             };
 
             return Ok(userDto);

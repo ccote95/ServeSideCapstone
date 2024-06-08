@@ -7,11 +7,11 @@ namespace ServerSideCapstone.Models;
 public class ListingCategory
 {
     [Required]
-    public int ForsalePostId { get; set; }
+    public int ListingId { get; set; }
 
     [Required]
     public int CategoryId { get; set; }
 
-    public Listing ForsalePost { get; set; }
+    public Listing Listing { get; set; }
     public Category Category { get; set; }
 }
