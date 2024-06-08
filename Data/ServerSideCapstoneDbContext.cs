@@ -26,18 +26,33 @@ public class ServerSideCapstoneDbContext : IdentityDbContext<IdentityUser>
     {
         base.OnModelCreating(modelBuilder);
 
+        // Configure composite key for ListingCategory
+        modelBuilder.Entity<ListingCategory>().HasKey(lc => new { lc.ListingId, lc.CategoryId });
+
+        modelBuilder.Entity<ListingCategory>()
+            .HasOne(lc => lc.Listing)
+            .WithMany(l => l.ListingCategories)
+            .HasForeignKey(lc => lc.ListingId);
+
+        modelBuilder.Entity<ListingCategory>()
+            .HasOne(lc => lc.Category)
+            .WithMany(c => c.ListingCategories)
+            .HasForeignKey(lc => lc.CategoryId);
+
+
+
         modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole
         {
             Id = "c3aaeb97-d2ba-4a53-a521-4eea61e59b35",
             Name = "Admin",
-            NormalizedName = "admin"
+            NormalizedName = "ADMIN"
         });
 
         modelBuilder.Entity<IdentityUser>().HasData(new IdentityUser
         {
             Id = "dbc40bc6-0829-4ac5-a3ed-180f5e916a5f",
             UserName = "Administrator",
-            Email = "admina@strator.comx",
+            Email = "admina@strator.com",
             PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, _configuration["AdminPassword"])
         });
 
@@ -46,6 +61,18 @@ public class ServerSideCapstoneDbContext : IdentityDbContext<IdentityUser>
             RoleId = "c3aaeb97-d2ba-4a53-a521-4eea61e59b35",
             UserId = "dbc40bc6-0829-4ac5-a3ed-180f5e916a5f"
         });
+
+        modelBuilder.Entity<Category>().HasData(new Category[]
+        {
+            new Category { Id = 1, Name = "Electronics" },
+            new Category { Id = 2, Name = "Furniture" },
+            new Category { Id = 3, Name = "Clothing" },
+            new Category { Id = 4, Name = "Books" },
+            new Category { Id = 5, Name = "Toys" }
+
+        }
+        );
+
         modelBuilder.Entity<UserProfile>().HasData(new UserProfile
         {
             Id = 1,
@@ -56,26 +83,29 @@ public class ServerSideCapstoneDbContext : IdentityDbContext<IdentityUser>
             ImgLocation = ""
         });
 
-        modelBuilder.Entity<Listing>().HasData(
-            new Listing { Id = 1, UserProfileId = 1, ProductImg = "https://m.media-amazon.com/images/I/61DbVExME8L._AC_UF1000,1000_QL80_.jpg", Title = "Ps2 Forsale!", Content = "Item for sale 1", CreatedOn = DateTime.Now.AddDays(3), CategoryId = 1 }
+        modelBuilder.Entity<Listing>().HasData(new Listing[]
+        {
+            new Listing { Id = 1, UserProfileId = 1, ProductImg = "https://m.media-amazon.com/images/I/61DbVExME8L._AC_UF1000,1000_QL80_.jpg", Title = "Ps2 Forsale!", Content = "Item for sale 1", CreatedOn = DateTime.Now.AddDays(3) },
+            new Listing
+            {
+                Id = 2,
+                UserProfileId = 1,
+                Title = "Smartphone for sale",
+                Content = "Brand new smartphone.",
+                ProductImg = "https://example.com/image1.jpg",
+                Price = 299.99m,
+                CreatedOn = DateTime.Now
+            }
 
+        }
         );
 
-
-
-        modelBuilder.Entity<ListingCategory>().HasData(
-            new ListingCategory { Id = 1, ListingId = 1, CategoryId = 1 }
-
+        modelBuilder.Entity<ListingCategory>().HasData(new ListingCategory[]
+        {
+            new ListingCategory { ListingId = 1, CategoryId = 1 },
+            new ListingCategory { ListingId = 2, CategoryId = 1 }
+        }
         );
-
-        modelBuilder.Entity<Category>().HasData(
-            new Category { Id = 1, Name = "Electronics" },
-            new Category { Id = 2, Name = "Furniture" },
-            new Category { Id = 3, Name = "Clothing" },
-            new Category { Id = 4, Name = "Books" },
-            new Category { Id = 5, Name = "Toys" }
-        );
-
     }
 
 }

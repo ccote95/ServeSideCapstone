@@ -29,3 +29,6 @@ export default function AllListings()
         </>
     )
 }
+// Need to add more data, with prices and temp links,
+// need to add price to listing.cs and other DTOs
+// need to do styling/

@@ -12,7 +12,7 @@ using ServerSideCapstone.Data;
 namespace ServerSideCapstone.Migrations
 {
     [DbContext(typeof(ServerSideCapstoneDbContext))]
-    [Migration("20240608020146_InitialCreate")]
+    [Migration("20240608150207_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -77,15 +77,15 @@ namespace ServerSideCapstone.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Content")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("timestamp without time zone");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("numeric");
 
                     b.Property<string>("ProductImg")
                         .IsRequired()
@@ -100,8 +100,6 @@ namespace ServerSideCapstone.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
-
                     b.HasIndex("UserProfileId");
 
                     b.ToTable("Listing");
@@ -110,11 +108,21 @@ namespace ServerSideCapstone.Migrations
                         new
                         {
                             Id = 1,
-                            CategoryId = 1,
                             Content = "Item for sale 1",
-                            CreatedOn = new DateTime(2024, 6, 10, 22, 1, 45, 908, DateTimeKind.Local).AddTicks(7212),
+                            CreatedOn = new DateTime(2024, 6, 11, 11, 2, 7, 90, DateTimeKind.Local).AddTicks(5121),
+                            Price = 0m,
                             ProductImg = "https://m.media-amazon.com/images/I/61DbVExME8L._AC_UF1000,1000_QL80_.jpg",
                             Title = "Ps2 Forsale!",
+                            UserProfileId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Content = "Brand new smartphone.",
+                            CreatedOn = new DateTime(2024, 6, 8, 11, 2, 7, 90, DateTimeKind.Local).AddTicks(5177),
+                            Price = 299.99m,
+                            ProductImg = "https://example.com/image1.jpg",
+                            Title = "Smartphone for sale",
                             UserProfileId = 1
                         });
                 });
@@ -149,7 +157,7 @@ namespace ServerSideCapstone.Migrations
                         {
                             Id = "c3aaeb97-d2ba-4a53-a521-4eea61e59b35",
                             Name = "Admin",
-                            NormalizedName = "admin"
+                            NormalizedName = "ADMIN"
                         });
                 });
 
@@ -246,13 +254,13 @@ namespace ServerSideCapstone.Migrations
                         {
                             Id = "dbc40bc6-0829-4ac5-a3ed-180f5e916a5f",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "bb3879c4-09e7-4ab6-a801-1c9b667680cc",
-                            Email = "admina@strator.comx",
+                            ConcurrencyStamp = "fc999683-d507-4e65-9332-4ff628fea960",
+                            Email = "admina@strator.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAEPNyHUnnT+AFkpMEVJk4I4xarwT0waCBEp6+YJaiK7Rj52kwmJc3lV3Yz/xFmEBEnw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEMK6DbAtBBjeLEw2LCvkvc8CWPap/0Fuhu/8l5WYm60Xpg1dEOxQs6Oe/jEYJn6XbA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "4c7df215-b0ac-439b-9b3f-1c3603496889",
+                            SecurityStamp = "a288a86e-f1bc-488b-b67b-9a92cbb9772e",
                             TwoFactorEnabled = false,
                             UserName = "Administrator"
                         });
@@ -348,32 +356,28 @@ namespace ServerSideCapstone.Migrations
 
             modelBuilder.Entity("ServerSideCapstone.Models.ListingCategory", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("ListingId")
                         .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("CategoryId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("ListingId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
+                    b.HasKey("ListingId", "CategoryId");
 
                     b.HasIndex("CategoryId");
-
-                    b.HasIndex("ListingId");
 
                     b.ToTable("ListingCategory");
 
                     b.HasData(
                         new
                         {
-                            Id = 1,
-                            CategoryId = 1,
-                            ListingId = 1
+                            ListingId = 1,
+                            CategoryId = 1
+                        },
+                        new
+                        {
+                            ListingId = 2,
+                            CategoryId = 1
                         });
                 });
 
@@ -425,19 +429,11 @@ namespace ServerSideCapstone.Migrations
 
             modelBuilder.Entity("Listing", b =>
                 {
-                    b.HasOne("Category", "Category")
-                        .WithMany()
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("ServerSideCapstone.Models.UserProfile", "UserProfile")
                         .WithMany()
                         .HasForeignKey("UserProfileId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Category");
 
                     b.Navigation("UserProfile");
                 });

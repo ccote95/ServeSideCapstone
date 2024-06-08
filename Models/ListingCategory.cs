@@ -6,7 +6,6 @@ namespace ServerSideCapstone.Models;
 
 public class ListingCategory
 {
-    public int Id { get; set; }
     [Required]
     public int ListingId { get; set; }
 

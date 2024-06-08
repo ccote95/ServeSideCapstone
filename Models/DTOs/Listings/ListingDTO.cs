@@ -13,7 +13,7 @@ public class ListingDTO
     public int CategoryId { get; set; }
     public CategoryDTO category { get; set; }
     public string Title { get; set; }
-
+    public decimal Price { get; set; }
     [Required]
     public string Content { get; set; }
 

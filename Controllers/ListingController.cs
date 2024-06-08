@@ -19,15 +19,15 @@ public class ListingController : ControllerBase
     {
         List<ListingsListDTO> listings = _dbContext.Listing
         .Include(l => l.UserProfile)
-        .Include(l => l.Category)
-        .ThenInclude(c => c.ListingCategories)
+        .Include(l => l.ListingCategories)
+        .ThenInclude(lc => lc.Category)
         .Select(l => new ListingsListDTO()
         {
             Id = l.Id,
             UserProfileId = l.UserProfileId,
             Title = l.Title,
             ProductImg = l.ProductImg,
-            Categories = l.Category.ListingCategories.Select(lc => new CategoryNoNavDTO()
+            Categories = l.ListingCategories.Select(lc => new CategoryNoNavDTO()
             {
                 Id = lc.Category.Id,
                 Name = lc.Category.Name

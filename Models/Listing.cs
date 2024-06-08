@@ -5,11 +5,10 @@ using ServerSideCapstone.Models;
 public class Listing
 {
     public int Id { get; set; }
-    public int CategoryId { get; set; }
     [Required]
     public int UserProfileId { get; set; }
     public string Title { get; set; }
-    public Category Category { get; set; }
+    public decimal Price { get; set; }
 
     public string ProductImg { get; set; }
 
