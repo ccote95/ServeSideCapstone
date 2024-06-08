@@ -2,18 +2,25 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using ServerSideCapstone.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore.Design;
 
 namespace ServerSideCapstone.Data;
 public class ServerSideCapstoneDbContext : IdentityDbContext<IdentityUser>
 {
     private readonly IConfiguration _configuration;
 
-    public DbSet<UserProfile> UserProfiles { get; set; }
-
     public ServerSideCapstoneDbContext(DbContextOptions<ServerSideCapstoneDbContext> context, IConfiguration config) : base(context)
     {
         _configuration = config;
     }
+
+    public DbSet<UserProfile> UserProfiles { get; set; }
+    public DbSet<Listing> Listing { get; set; }
+    public DbSet<IdentityRole> IdentityRoles { get; set; }
+    public DbSet<Category> Categories { get; set; }
+
+    public DbSet<ListingCategory> ListingCategory { get; set; }
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -46,8 +53,29 @@ public class ServerSideCapstoneDbContext : IdentityDbContext<IdentityUser>
             FirstName = "Admina",
             LastName = "Strator",
             Address = "101 Main Street",
+            ImgLocation = ""
         });
 
+        modelBuilder.Entity<Listing>().HasData(
+            new Listing { Id = 1, UserProfileId = 1, ProductImg = "", Content = "Item for sale 1", CreatedOn = DateTime.Now }
+
+        );
+
+        modelBuilder.Entity<ListingCategory>().HasKey(l => new { l.ListingId, l.CategoryId });
+
+        modelBuilder.Entity<ListingCategory>().HasData(
+            new ListingCategory { ListingId = 1, CategoryId = 1 }
+
+        );
+
+        modelBuilder.Entity<Category>().HasData(
+            new Category { Id = 1, Name = "Electronics" },
+            new Category { Id = 2, Name = "Furniture" },
+            new Category { Id = 3, Name = "Clothing" },
+            new Category { Id = 4, Name = "Books" },
+            new Category { Id = 5, Name = "Toys" }
+        );
 
     }
+
 }

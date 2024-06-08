@@ -9,7 +9,7 @@ public class Listing
     [Required]
     public int UserProfileId { get; set; }
 
-    public byte[] ProductImg { get; set; }
+    public string ProductImg { get; set; }
 
     [Required]
     public string Content { get; set; }
