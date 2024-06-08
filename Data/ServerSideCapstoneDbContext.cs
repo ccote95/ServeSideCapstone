@@ -57,14 +57,14 @@ public class ServerSideCapstoneDbContext : IdentityDbContext<IdentityUser>
         });
 
         modelBuilder.Entity<Listing>().HasData(
-            new Listing { Id = 1, UserProfileId = 1, ProductImg = "", Content = "Item for sale 1", CreatedOn = DateTime.Now }
+            new Listing { Id = 1, UserProfileId = 1, ProductImg = "", Content = "Item for sale 1", CreatedOn = DateTime.Now, CategoryId = 1 }
 
         );
 
-        modelBuilder.Entity<ListingCategory>().HasKey(l => new { l.ListingId, l.CategoryId });
+
 
         modelBuilder.Entity<ListingCategory>().HasData(
-            new ListingCategory { ListingId = 1, CategoryId = 1 }
+            new ListingCategory { Id = 1, ListingId = 1, CategoryId = 1 }
 
         );
 

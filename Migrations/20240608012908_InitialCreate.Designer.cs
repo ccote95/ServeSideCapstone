@@ -12,7 +12,7 @@ using ServerSideCapstone.Data;
 namespace ServerSideCapstone.Migrations
 {
     [DbContext(typeof(ServerSideCapstoneDbContext))]
-    [Migration("20240607232040_InitialCreate")]
+    [Migration("20240608012908_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -77,6 +77,9 @@ namespace ServerSideCapstone.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Content")
                         .IsRequired()
                         .HasColumnType("text");
@@ -93,6 +96,8 @@ namespace ServerSideCapstone.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CategoryId");
+
                     b.HasIndex("UserProfileId");
 
                     b.ToTable("Listing");
@@ -101,8 +106,9 @@ namespace ServerSideCapstone.Migrations
                         new
                         {
                             Id = 1,
+                            CategoryId = 1,
                             Content = "Item for sale 1",
-                            CreatedOn = new DateTime(2024, 6, 7, 19, 20, 40, 346, DateTimeKind.Local).AddTicks(9441),
+                            CreatedOn = new DateTime(2024, 6, 7, 21, 29, 8, 271, DateTimeKind.Local).AddTicks(5731),
                             ProductImg = "",
                             UserProfileId = 1
                         });
@@ -235,13 +241,13 @@ namespace ServerSideCapstone.Migrations
                         {
                             Id = "dbc40bc6-0829-4ac5-a3ed-180f5e916a5f",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b1882fe0-6e82-460e-ae87-b840417108bd",
+                            ConcurrencyStamp = "0c42aaad-05ed-441c-928f-845c4db4dcc1",
                             Email = "admina@strator.comx",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAEPXU9f+8aOvZ/yk+npk6sDKvTLaAgKrVYtn850VJLL/qQ79BPtHoBVEfhsaBxc5ScA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEKp1FLhSSlfNctHJvwU/qUycqZyK2j1GSzdtwP6G4TrmsQPTeqFxCRa3yDrNU4Iojg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "0a64c6a7-38e0-4a97-9287-8a0e90ec10c8",
+                            SecurityStamp = "7e8e19f4-536c-4d97-94c0-98b7c1f7dc03",
                             TwoFactorEnabled = false,
                             UserName = "Administrator"
                         });
@@ -337,23 +343,32 @@ namespace ServerSideCapstone.Migrations
 
             modelBuilder.Entity("ServerSideCapstone.Models.ListingCategory", b =>
                 {
-                    b.Property<int>("ListingId")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("CategoryId")
                         .HasColumnType("integer");
 
-                    b.HasKey("ListingId", "CategoryId");
+                    b.Property<int>("ListingId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("ListingId");
 
                     b.ToTable("ListingCategory");
 
                     b.HasData(
                         new
                         {
-                            ListingId = 1,
-                            CategoryId = 1
+                            Id = 1,
+                            CategoryId = 1,
+                            ListingId = 1
                         });
                 });
 
@@ -405,11 +420,19 @@ namespace ServerSideCapstone.Migrations
 
             modelBuilder.Entity("Listing", b =>
                 {
+                    b.HasOne("Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("ServerSideCapstone.Models.UserProfile", "UserProfile")
                         .WithMany()
                         .HasForeignKey("UserProfileId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Category");
 
                     b.Navigation("UserProfile");
                 });
@@ -474,7 +497,7 @@ namespace ServerSideCapstone.Migrations
                         .IsRequired();
 
                     b.HasOne("Listing", "Listing")
-                        .WithMany("ForsalePostCategories")
+                        .WithMany("ListingCategories")
                         .HasForeignKey("ListingId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -502,7 +525,7 @@ namespace ServerSideCapstone.Migrations
 
             modelBuilder.Entity("Listing", b =>
                 {
-                    b.Navigation("ForsalePostCategories");
+                    b.Navigation("ListingCategories");
                 });
 #pragma warning restore 612, 618
         }

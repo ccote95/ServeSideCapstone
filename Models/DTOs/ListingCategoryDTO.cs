@@ -2,11 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace ServerSideCapstone.Models;
+namespace ServerSideCapstone.Models.DTOs;
 
-public class ListingCategory
+public class ListingCategoryDTO
 {
-    public int Id { get; set; }
     [Required]
     public int ListingId { get; set; }
 

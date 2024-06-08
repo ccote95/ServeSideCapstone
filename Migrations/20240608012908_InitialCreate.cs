@@ -201,6 +201,7 @@ namespace ServerSideCapstone.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    CategoryId = table.Column<int>(type: "integer", nullable: false),
                     UserProfileId = table.Column<int>(type: "integer", nullable: false),
                     ProductImg = table.Column<string>(type: "text", nullable: false),
                     Content = table.Column<string>(type: "text", nullable: false),
@@ -209,6 +210,12 @@ namespace ServerSideCapstone.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Listing", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Listing_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Listing_UserProfiles_UserProfileId",
                         column: x => x.UserProfileId,
@@ -221,12 +228,14 @@ namespace ServerSideCapstone.Migrations
                 name: "ListingCategory",
                 columns: table => new
                 {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     ListingId = table.Column<int>(type: "integer", nullable: false),
                     CategoryId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ListingCategory", x => new { x.ListingId, x.CategoryId });
+                    table.PrimaryKey("PK_ListingCategory", x => x.Id);
                     table.ForeignKey(
                         name: "FK_ListingCategory_Categories_CategoryId",
                         column: x => x.CategoryId,
@@ -249,7 +258,7 @@ namespace ServerSideCapstone.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "dbc40bc6-0829-4ac5-a3ed-180f5e916a5f", 0, "b1882fe0-6e82-460e-ae87-b840417108bd", "admina@strator.comx", false, false, null, null, null, "AQAAAAIAAYagAAAAEPXU9f+8aOvZ/yk+npk6sDKvTLaAgKrVYtn850VJLL/qQ79BPtHoBVEfhsaBxc5ScA==", null, false, "0a64c6a7-38e0-4a97-9287-8a0e90ec10c8", false, "Administrator" });
+                values: new object[] { "dbc40bc6-0829-4ac5-a3ed-180f5e916a5f", 0, "0c42aaad-05ed-441c-928f-845c4db4dcc1", "admina@strator.comx", false, false, null, null, null, "AQAAAAIAAYagAAAAEKp1FLhSSlfNctHJvwU/qUycqZyK2j1GSzdtwP6G4TrmsQPTeqFxCRa3yDrNU4Iojg==", null, false, "7e8e19f4-536c-4d97-94c0-98b7c1f7dc03", false, "Administrator" });
 
             migrationBuilder.InsertData(
                 table: "Categories",
@@ -275,13 +284,13 @@ namespace ServerSideCapstone.Migrations
 
             migrationBuilder.InsertData(
                 table: "Listing",
-                columns: new[] { "Id", "Content", "CreatedOn", "ProductImg", "UserProfileId" },
-                values: new object[] { 1, "Item for sale 1", new DateTime(2024, 6, 7, 19, 20, 40, 346, DateTimeKind.Local).AddTicks(9441), "", 1 });
+                columns: new[] { "Id", "CategoryId", "Content", "CreatedOn", "ProductImg", "UserProfileId" },
+                values: new object[] { 1, 1, "Item for sale 1", new DateTime(2024, 6, 7, 21, 29, 8, 271, DateTimeKind.Local).AddTicks(5731), "", 1 });
 
             migrationBuilder.InsertData(
                 table: "ListingCategory",
-                columns: new[] { "CategoryId", "ListingId" },
-                values: new object[] { 1, 1 });
+                columns: new[] { "Id", "CategoryId", "ListingId" },
+                values: new object[] { 1, 1, 1 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -321,6 +330,11 @@ namespace ServerSideCapstone.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Listing_CategoryId",
+                table: "Listing",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Listing_UserProfileId",
                 table: "Listing",
                 column: "UserProfileId");
@@ -329,6 +343,11 @@ namespace ServerSideCapstone.Migrations
                 name: "IX_ListingCategory_CategoryId",
                 table: "ListingCategory",
                 column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ListingCategory_ListingId",
+                table: "ListingCategory",
+                column: "ListingId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserProfiles_IdentityUserId",
@@ -361,10 +380,10 @@ namespace ServerSideCapstone.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Categories");
+                name: "Listing");
 
             migrationBuilder.DropTable(
-                name: "Listing");
+                name: "Categories");
 
             migrationBuilder.DropTable(
                 name: "UserProfiles");
