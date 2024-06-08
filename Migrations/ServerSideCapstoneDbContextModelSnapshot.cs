@@ -106,20 +106,40 @@ namespace ServerSideCapstone.Migrations
                         {
                             Id = 1,
                             Content = "Item for sale 1",
-                            CreatedOn = new DateTime(2024, 6, 11, 11, 52, 54, 649, DateTimeKind.Local).AddTicks(3602),
+                            CreatedOn = new DateTime(2024, 6, 11, 12, 41, 46, 745, DateTimeKind.Local).AddTicks(174),
                             Price = 199.99m,
                             ProductImg = "https://m.media-amazon.com/images/I/61DbVExME8L._AC_UF1000,1000_QL80_.jpg",
-                            Title = "Ps2 Forsale!",
+                            Title = "Ps2 for sale!",
                             UserProfileId = 1
                         },
                         new
                         {
                             Id = 2,
                             Content = "Brand new smartphone.",
-                            CreatedOn = new DateTime(2024, 6, 8, 11, 52, 54, 649, DateTimeKind.Local).AddTicks(3657),
+                            CreatedOn = new DateTime(2024, 6, 8, 12, 41, 46, 745, DateTimeKind.Local).AddTicks(236),
                             Price = 299.99m,
-                            ProductImg = "https://example.com/image1.jpg",
+                            ProductImg = "https://cdn.thewirecutter.com/wp-content/media/2023/10/smartphone-2048px-4861.jpg?auto=webp&quality=75&width=1024",
                             Title = "Smartphone for sale",
+                            UserProfileId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Content = "Gently used laptop in excellent condition.",
+                            CreatedOn = new DateTime(2024, 6, 1, 12, 41, 46, 745, DateTimeKind.Local).AddTicks(238),
+                            Price = 799.99m,
+                            ProductImg = "https://i5.walmartimages.com/seo/HP-Stream-14-Laptop-Intel-Celeron-N4000-4GB-SDRAM-32GB-eMMC-Office-365-1-yr-Brilliant-Black_d579aa66-7e24-4eb2-9686-521be769a755_2.09283250bd5d2a12834c2d4aaca652dd.jpeg",
+                            Title = "Laptop for sale",
+                            UserProfileId = 1
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Content = "Hand made wooden table",
+                            CreatedOn = new DateTime(2024, 6, 5, 12, 41, 46, 745, DateTimeKind.Local).AddTicks(241),
+                            Price = 399.99m,
+                            ProductImg = "https://i.ebayimg.com/images/g/DasAAOSwZwRj0qTG/s-l1200.webp",
+                            Title = "Wooden Table",
                             UserProfileId = 1
                         });
                 });
@@ -251,13 +271,13 @@ namespace ServerSideCapstone.Migrations
                         {
                             Id = "dbc40bc6-0829-4ac5-a3ed-180f5e916a5f",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "7a63aea1-ea1b-4259-be4a-7fd9efa16caa",
+                            ConcurrencyStamp = "1c0fba1b-4b6a-4ece-af8d-bf0b907665dd",
                             Email = "admina@strator.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAENOsPV/hSAlmPx/i2KSiel6ra3KQN5JLxXDXVQch3oo6rQP7S1PBx/bXFL/OhgrzsQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEIFB/IecHvnaawWiteuZGzHZfCJhEaU315BnWu1UdbQltIVCCNvi68oWI0xXWAlvtA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "a69158c5-8c5a-4615-897b-f11974e64c1d",
+                            SecurityStamp = "881369bf-5c40-4352-80eb-9efbdeebfea4",
                             TwoFactorEnabled = false,
                             UserName = "Administrator"
                         });

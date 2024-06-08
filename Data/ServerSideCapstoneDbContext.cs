@@ -85,16 +85,36 @@ public class ServerSideCapstoneDbContext : IdentityDbContext<IdentityUser>
 
         modelBuilder.Entity<Listing>().HasData(new Listing[]
         {
-            new Listing { Id = 1, UserProfileId = 1, ProductImg = "https://m.media-amazon.com/images/I/61DbVExME8L._AC_UF1000,1000_QL80_.jpg", Title = "Ps2 Forsale!",Price = 199.99m, Content = "Item for sale 1", CreatedOn = DateTime.Now.AddDays(3) },
+            new Listing { Id = 1, UserProfileId = 1, ProductImg = "https://m.media-amazon.com/images/I/61DbVExME8L._AC_UF1000,1000_QL80_.jpg", Title = "Ps2 for sale!",Price = 199.99m, Content = "Item for sale 1", CreatedOn = DateTime.Now.AddDays(3) },
             new Listing
             {
                 Id = 2,
                 UserProfileId = 1,
                 Title = "Smartphone for sale",
                 Content = "Brand new smartphone.",
-                ProductImg = "https://example.com/image1.jpg",
+                ProductImg = "https://cdn.thewirecutter.com/wp-content/media/2023/10/smartphone-2048px-4861.jpg?auto=webp&quality=75&width=1024",
                 Price = 299.99m,
                 CreatedOn = DateTime.Now
+            },
+                new Listing
+            {
+                Id = 3,
+                UserProfileId = 1,
+                Title = "Laptop for sale",
+                Content = "Gently used laptop in excellent condition.",
+                ProductImg = "https://i5.walmartimages.com/seo/HP-Stream-14-Laptop-Intel-Celeron-N4000-4GB-SDRAM-32GB-eMMC-Office-365-1-yr-Brilliant-Black_d579aa66-7e24-4eb2-9686-521be769a755_2.09283250bd5d2a12834c2d4aaca652dd.jpeg",
+                Price = 799.99m, // Price set to $799.99
+                CreatedOn = DateTime.Now.AddDays(-7) // Created 7 days ago
+            },
+            new Listing
+            {
+                Id = 4,
+                UserProfileId = 1,
+                Title = "Wooden Table",
+                Content = "Hand made wooden table",
+                ProductImg = "https://i.ebayimg.com/images/g/DasAAOSwZwRj0qTG/s-l1200.webp",
+                Price = 399.99m, // Price set to $399.99
+                CreatedOn = DateTime.Now.AddDays(-3) // Created 3 days ago
             }
 
         }
@@ -103,7 +123,9 @@ public class ServerSideCapstoneDbContext : IdentityDbContext<IdentityUser>
         modelBuilder.Entity<ListingCategory>().HasData(new ListingCategory[]
         {
             new ListingCategory { ListingId = 1, CategoryId = 1 },
-            new ListingCategory { ListingId = 2, CategoryId = 1 }
+            new ListingCategory { ListingId = 2, CategoryId = 1 },
+             new ListingCategory { ListingId = 3, CategoryId = 1 },
+            new ListingCategory { ListingId = 4, CategoryId = 2 }
         }
         );
     }

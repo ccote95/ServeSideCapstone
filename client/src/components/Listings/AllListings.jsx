@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { getAll } from "../../managers/listingManger.js"
 import { Card, CardBody, CardImg, CardSubtitle, CardTitle } from "reactstrap"
+import PageContainer from "../PageContainer.jsx"
 
 export default function AllListings()
 {
@@ -12,24 +13,24 @@ export default function AllListings()
     },[])
 
     return(
-        <>
+        <PageContainer>
         {listings.map((l) => (
-            <Card className="w-50 m-auto"  style={{maxWidth: "1200px"}}>
+            <Card className="w-25 d-flex flex-column  shadow" key={l.id} style={{maxWidth: "1200px"}}>
                 <CardImg
-                className="w-25 rounded"
+                className="w-50 m-auto rounded mt-1"
                 src={l.productImg}/>
-                <CardTitle>
+                <CardBody>
+                <CardTitle className="m-1 fw-bold">
                     {l.title}
                 </CardTitle>
-                <CardSubtitle>
-                    {l.price}
+                <CardSubtitle className="m-1">
+                    ${l.price}
                 </CardSubtitle>
-                <CardBody>
                     {l.content}
                 </CardBody>
             </Card>
         ))}
-        </>
+        </PageContainer>
     )
 }
 // Need to add more data, with prices and temp links,
