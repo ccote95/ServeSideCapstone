@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { getAll } from "../../managers/listingManger.js"
-import { Card, CardBody, CardImg, CardSubtitle, CardTitle } from "reactstrap"
+import { Card, CardBody, CardImg, CardLink, CardSubtitle, CardTitle } from "reactstrap"
 import PageContainer from "../PageContainer.jsx"
 
 export default function AllListings()
@@ -16,10 +16,14 @@ export default function AllListings()
         <PageContainer>
         {listings.map((l) => (
             <Card className="w-25 d-flex flex-column  shadow" key={l.id} style={{maxWidth: "1200px"}}>
-                <CardImg
-                className="w-50 m-auto rounded mt-1"
-                style={{maxHeight: "150px"}}
-                src={l.productImg}/>
+                <CardLink href={`listings/${l.id}`}>
+                    <CardImg
+                        className="w-50 m-auto rounded mt-1"
+                        style={{maxHeight: "150px"}}
+                        src={l.productImg}
+                    />
+
+                </CardLink>
                 <CardBody>
                 <CardTitle className="m-1 fw-bold">
                     {l.title}

@@ -4,6 +4,7 @@ import Login from "./auth/Login";
 import Register from "./auth/Register";
 import AllListings from "./Listings/AllListings.jsx";
 import LandingPage from "./LandingPage.jsx";
+import ListingDetails from "./Listings/ListingDetails.jsx";
 
 
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
@@ -27,6 +28,17 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
             </AuthorizedRoute>
           }
         />
+        <Route path=":id">
+        <Route
+          index
+          element={
+            <AuthorizedRoute loggedInUser={loggedInUser}>
+              <ListingDetails loggedInUser={loggedInUser}/>
+            </AuthorizedRoute>
+          }
+        />
+
+        </Route>
         </Route>
       
         <Route
