@@ -13,4 +13,11 @@ public class UserProfile
 
     public IdentityUser IdentityUser { get; set; }
     public string ImgLocation { get; set; }
+    public string FullName
+    {
+        get
+        {
+            return $"{FirstName} {LastName}";
+        }
+    }
 }
