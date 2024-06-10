@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { getAll } from "../../managers/listingManger.js"
-import { Card, CardBody, CardImg, CardLink, CardSubtitle, CardTitle } from "reactstrap"
+import { Button, Card, CardBody, CardImg, CardLink, CardSubtitle, CardTitle } from "reactstrap"
 import PageContainer from "../PageContainer.jsx"
 
 export default function AllListings()
@@ -13,6 +13,10 @@ export default function AllListings()
     },[])
 
     return(
+        <div>
+            <Button className="ms-2 mt-2" color="primary">
+                New Listing
+            </Button>
         <PageContainer>
         {listings.map((l) => (
             <Card className="w-25 d-flex flex-column  shadow" key={l.id} style={{maxWidth: "1200px"}}>
@@ -36,6 +40,7 @@ export default function AllListings()
             </Card>
         ))}
         </PageContainer>
+        </div>
     )
 }
 // Need to add more data, with prices and temp links,
