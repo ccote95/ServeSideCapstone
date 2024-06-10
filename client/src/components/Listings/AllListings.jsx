@@ -18,7 +18,7 @@ export default function AllListings()
             <Card className="w-25 d-flex flex-column  shadow" key={l.id} style={{maxWidth: "1200px"}}>
                 <CardLink href={`listings/${l.id}`}>
                     <CardImg
-                        className="w-50 m-auto rounded mt-1"
+                        className="w-50 m-auto rounded mt-1 ms-1"
                         style={{maxHeight: "150px"}}
                         src={l.productImg}
                     />
