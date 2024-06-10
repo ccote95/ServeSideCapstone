@@ -29,6 +29,17 @@ export default function ListingForm()
             }
             setChosenCategories(selectedCategories)
     }
+
+
+    const onSubmit = () => {
+        const formData = new FormData()
+        formData.append("formFile", image)
+        formData.append("title", title)
+        formData.append("categoryIds",categoryIds)
+        formData.append("content", content)
+        formData.append("price", price)
+
+    }
     return (
       
    <PageContainer>
