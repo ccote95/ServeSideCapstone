@@ -18,6 +18,13 @@ public class ListingsListDTO
 
     [Required]
     public DateTime CreatedOn { get; set; }
+    public string FormattedDate
+    {
+        get
+        {
+            return CreatedOn.ToString("MMMM dd, yyyy");
+        }
+    }
 
     public UserProfileForListingsDTO UserProfile { get; set; }
     public List<ListingCategoryDTO> ListingCategories { get; set; }

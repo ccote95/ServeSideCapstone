@@ -28,6 +28,9 @@ export default function ListingDetails({loggedInUser})
                     <Badge className="fs-4 "pill>
                         {listing?.title}
                     </Badge>
+                    <Badge style={{float: "right"}}>
+                        {listing?.formattedDate}
+                    </Badge>
                     <div className="pe-auto fs-3">
                         <Badge pill>
                             {listing?.userProfile.fullName}
@@ -54,7 +57,7 @@ export default function ListingDetails({loggedInUser})
                     Edit
                 </Button>
                 {listing?.userProfile.id == loggedInUser.id && (
-                <Button>
+                <Button className="me-2 mb-1">
                     DELETE
                 </Button>
 
