@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { getAll } from "../../managers/listingManger.js"
 import { Button, Card, CardBody, CardImg, CardLink, CardSubtitle, CardTitle } from "reactstrap"
-import PageContainer from "../PageContainer.jsx"
+import FlexContainer from "../FlexContainer.jsx"
 
 export default function AllListings()
 {
@@ -17,7 +17,7 @@ export default function AllListings()
             <Button className="ms-2 mt-2" color="primary">
                 New Listing
             </Button>
-        <PageContainer>
+        <FlexContainer>
         {listings.map((l) => (
             <Card className="w-25 d-flex flex-column  shadow" key={l.id} style={{maxWidth: "1200px"}}>
                 <CardLink href={`listings/${l.id}`}>
@@ -39,7 +39,7 @@ export default function AllListings()
                 </CardBody>
             </Card>
         ))}
-        </PageContainer>
+        </FlexContainer>
         </div>
     )
 }

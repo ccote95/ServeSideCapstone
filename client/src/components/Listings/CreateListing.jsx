@@ -1,8 +1,6 @@
+import ListingForm from "./ListingForm.jsx";
+
 export default function CreateListing()
 {
-    return(
-        <div>
-            hello
-        </div>
-    )
+    return(<ListingForm/>)
 }

@@ -1,6 +1,8 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ServerSideCapstone.Data;
+using ServerSideCapstone.Models;
 using ServerSideCapstone.Models.DTOs;
 
 [ApiController]
@@ -83,4 +85,20 @@ public class ListingController : ControllerBase
                 }
             }).FirstOrDefault(l => l.Id == id));
     }
+
+    // [HttpPost]
+    // // [Authorize]
+    // public IActionResult CreateListing(CreateListingDTO newListing, int id)
+    // {
+    //     UserProfile user = _dbContext.UserProfiles.FirstOrDefault(up => up.Id == id);
+
+    //     Listing listing = new Listing()
+    //     {
+    //         UserProfileId = user.Id,
+    //         Title = newListing.Title,
+    //         Price = newListing.Price,
+    //         Content = newListing.Content,
+    //         CreatedOn = DateTime.Now,
+    //     };
+    // }
 }
