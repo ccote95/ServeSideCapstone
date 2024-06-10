@@ -86,19 +86,47 @@ public class ListingController : ControllerBase
             }).FirstOrDefault(l => l.Id == id));
     }
 
-    // [HttpPost]
-    // // [Authorize]
-    // public IActionResult CreateListing(CreateListingDTO newListing, int id)
-    // {
-    //     UserProfile user = _dbContext.UserProfiles.FirstOrDefault(up => up.Id == id);
+    [HttpPost]
+    // [Authorize]
+    public IActionResult CreateListing(CreateListingDTO newListing, int id)
+    {
+        UserProfile user = _dbContext.UserProfiles.FirstOrDefault(up => up.Id == id);
 
-    //     Listing listing = new Listing()
-    //     {
-    //         UserProfileId = user.Id,
-    //         Title = newListing.Title,
-    //         Price = newListing.Price,
-    //         Content = newListing.Content,
-    //         CreatedOn = DateTime.Now,
-    //     };
-    // }
+        Listing listing = new Listing()
+        {
+            UserProfileId = user.Id,
+            Title = newListing.Title,
+            Price = newListing.Price,
+            Content = newListing.Content,
+            CreatedOn = DateTime.Now,
+        };
+
+        _dbContext.Listing.Add(listing);
+        _dbContext.SaveChanges();
+
+        foreach (int categoryId in newListing.CategoryIds)
+        {
+            ListingCategory listingCategory = new ListingCategory { ListingId = listing.Id, CategoryId = categoryId };
+
+            _dbContext.ListingCategory.Add(listingCategory);
+        }
+
+        if (newListing.FormFile != null)
+        {
+            byte[] file;
+            using (var memoryStream = new MemoryStream())
+            {
+                newListing.FormFile.CopyTo(memoryStream);
+                file = memoryStream.ToArray();
+            }
+
+            listing.ImageBlob = file;
+        }
+
+        _dbContext.SaveChanges();
+
+        return NoContent();
+
+
+    }
 }

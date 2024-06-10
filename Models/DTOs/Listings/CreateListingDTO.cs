@@ -19,6 +19,7 @@ public class CreateListingDTO
 
     [Required]
     public DateTime CreatedOn { get; set; }
+    public List<int> CategoryIds { get; set; }
 
     public List<ListingCategory> ListingCategories { get; set; }
 }
