@@ -81,7 +81,6 @@ public class ListingController : ControllerBase
 
 
                 }
-            })
-        .FirstOrDefault(l => l.Id == id));
+            }).FirstOrDefault(l => l.Id == id));
     }
 }
