@@ -50,4 +50,37 @@ public class ListingController : ControllerBase
 
         return Ok(listings);
     }
+
+    [HttpGet("{id}")]
+    public IActionResult GetById(int id)
+    {
+        return Ok(_dbContext.Listing
+        .Include(l => l.UserProfile)
+        .Include(l => l.ListingCategories)
+            .ThenInclude(lc => lc.Category)
+            .Select(l => new ListingsListDTO()
+            {
+                Id = l.Id,
+                UserProfileId = l.UserProfileId,
+                Title = l.Title,
+                ProductImg = l.ProductImg,
+                Price = l.Price,
+                Categories = l.ListingCategories.Select(lc => new CategoryNoNavDTO()
+                {
+                    Id = lc.Category.Id,
+                    Name = lc.Category.Name
+                }).ToList(),
+                Content = l.Content,
+                CreatedOn = l.CreatedOn,
+                UserProfile = new UserProfileForListingsDTO()
+                {
+                    Id = l.UserProfile.Id,
+                    FirstName = l.UserProfile.FirstName,
+                    LastName = l.UserProfile.LastName,
+                    ImgLocation = l.UserProfile.ImgLocation
+
+
+                }
+            }).FirstOrDefault(l => l.Id == id));
+    }
 }

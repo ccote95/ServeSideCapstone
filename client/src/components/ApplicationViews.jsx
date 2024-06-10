@@ -3,6 +3,8 @@ import { AuthorizedRoute } from "./auth/AuthorizedRoute";
 import Login from "./auth/Login";
 import Register from "./auth/Register";
 import AllListings from "./Listings/AllListings.jsx";
+import LandingPage from "./LandingPage.jsx";
+import ListingDetails from "./Listings/ListingDetails.jsx";
 
 
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
@@ -13,10 +15,31 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
           index
           element={
             <AuthorizedRoute loggedInUser={loggedInUser}>
-             <AllListings/>
+             <LandingPage loggedInUser={loggedInUser}/>
             </AuthorizedRoute>
           }
         />
+        <Route path="listings">
+          <Route
+          index
+          element={
+            <AuthorizedRoute loggedInUser={loggedInUser}>
+              <AllListings loggedInUser={loggedInUser}/>
+            </AuthorizedRoute>
+          }
+        />
+        <Route path=":id">
+        <Route
+          index
+          element={
+            <AuthorizedRoute loggedInUser={loggedInUser}>
+              <ListingDetails loggedInUser={loggedInUser}/>
+            </AuthorizedRoute>
+          }
+        />
+
+        </Route>
+        </Route>
       
         <Route
           path="login"

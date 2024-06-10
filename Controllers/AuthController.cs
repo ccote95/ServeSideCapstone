@@ -142,6 +142,7 @@ public class AuthController : ControllerBase
                 LastName = registration.LastName,
                 Address = registration.Address,
                 IdentityUserId = user.Id,
+                ImgLocation = ""
             });
             _dbContext.SaveChanges();
 
