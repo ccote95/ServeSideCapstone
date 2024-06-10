@@ -15,7 +15,7 @@ export default function LandingPage({loggedInUser})
           <Col md="12">
             <Card className="text-center shadow" >
               <CardBody className="m-5">
-                <h1>Welcome {user.fullName}!, To capstone</h1>
+                <h1>Welcome {user?.fullName}!, To capstone</h1>
               </CardBody>
             </Card>
           </Col>

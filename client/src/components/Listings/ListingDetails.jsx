@@ -49,8 +49,8 @@ export default function ListingDetails({loggedInUser})
                 <CardBody className=" m-auto">
                     {listing?.content}
                 </CardBody>
-               <div className="d-flex flex-row flex-wrap mt-3 w-100 gap-2 justify-content-md-end" >
-               <Button>
+               <div className="d-flex flex-row flex-wrap mt-3 w-100 gap-2 justify-content-md-end " >
+               <Button className="me-2 mb-1">
                     Edit
                 </Button>
                 {listing?.userProfile.id == loggedInUser.id && (
