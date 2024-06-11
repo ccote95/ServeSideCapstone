@@ -27,3 +27,9 @@ export const createListing = (listing) => {
         throw e;
     });
 };
+
+export const deleteListing = (id) => {
+    return fetch(`${_api}/${id}`,{
+        method: "DELETE"
+    })
+}

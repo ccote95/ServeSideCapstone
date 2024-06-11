@@ -68,6 +68,7 @@ public class ListingController : ControllerBase
                 UserProfileId = l.UserProfileId,
                 Title = l.Title,
                 ProductImg = l.ProductImg,
+                ImageBlob = l.ImageBlob,
                 Price = l.Price,
                 Categories = l.ListingCategories.Select(lc => new CategoryNoNavDTO()
                 {
@@ -133,5 +134,22 @@ public class ListingController : ControllerBase
         return Ok();
 
 
+    }
+
+    [HttpDelete("{id}")]
+    // [Authorize]
+    public IActionResult DeleteListing(int id)
+    {
+        Listing foundListing = _dbContext.Listing.SingleOrDefault(l => l.Id == id);
+
+        if (foundListing == null)
+        {
+            return BadRequest();
+        }
+
+        _dbContext.Listing.Remove(foundListing);
+        _dbContext.SaveChanges();
+
+        return NoContent();
     }
 }
