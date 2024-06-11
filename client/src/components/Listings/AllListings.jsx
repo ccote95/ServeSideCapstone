@@ -17,6 +17,10 @@ export default function AllListings()
         getAll().then(setListings)
     },[])
 
+    useEffect(() => {
+        
+    },[])
+
     return (
         <div>
             <Button className="ms-2 mt-2" color="primary" onClick={() => {navigate("create")}}>
