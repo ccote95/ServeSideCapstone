@@ -24,11 +24,13 @@ export default function ListingDetails({loggedInUser})
     return(
        <PageContainer>
             <Card className="shadow" style={{width: "60%"}}>
-                <CardImg
-                    className="w-25 m-auto rounded mt-1"
-                    alt="Listing Header Image"
-                    src={listing?.productImg}
-                />
+            {!listing?.imageBlob ? (
+                    <CardImg
+                        src={listing?.productImg}
+                    />
+                ) : (
+                    <CardImg src={`data:image/jpeg;base64,${listing?.imageBlob}`} />
+                )}
                 <CardImgOverlay className="pe-none">
                     <Badge className="fs-4 "pill>
                         {listing?.title}
