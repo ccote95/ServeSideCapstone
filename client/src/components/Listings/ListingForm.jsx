@@ -3,6 +3,7 @@ import PageContainer from "../PageContainer.jsx";
 import { useEffect, useState } from "react";
 import { getAll } from "../../managers/categoryManager.js";
 import { createListing } from "../../managers/listingManger.js";
+import { useNavigate } from "react-router-dom";
 
 export default function ListingForm({loggedInUser})
 {
@@ -13,6 +14,8 @@ export default function ListingForm({loggedInUser})
     const [price, setPrice] = useState(0)
     const [image, setImage] = useState()
     const [chosenCategories, setChosenCategories] = useState([])
+
+    const navigate = useNavigate()
 
     useEffect(() => {
         getAll().then(setCategories)
@@ -43,7 +46,7 @@ export default function ListingForm({loggedInUser})
         formData.append("userProfileId", loggedInUser.id)
 
 
-        createListing(formData)
+        createListing(formData).then(() => {navigate("/Listings")})
     .then(data => {
         console.log('Success:', data);
     })
@@ -60,6 +63,7 @@ export default function ListingForm({loggedInUser})
                     Title
                 </Label>
                 <Input
+                required
                 placeholder="Enter the Title for the Listing"
                 style={{width: "100%"}}
                 onChange={(e) => {setTitle(e.target.value)}}
@@ -73,6 +77,7 @@ export default function ListingForm({loggedInUser})
                 <FormGroup check>
                     <Label check>
                     <Input
+                    required
                         type="checkbox"
                         value={c.id}
                         onChange={() => handleCheckBoxChange(c.id)}
@@ -87,6 +92,7 @@ export default function ListingForm({loggedInUser})
             <FormGroup>
                 <Label>Price</Label>
                 <Input
+                required
                 type="number"
                  step="0.01"
                  min="0"
@@ -96,6 +102,7 @@ export default function ListingForm({loggedInUser})
             <FormGroup>
                 <Label>Content</Label>
                 <Input
+                required
                 placeholder="Add a description of your itme"
                 onChange={(e) => {setContent(e.target.value)}}/>
             </FormGroup>
