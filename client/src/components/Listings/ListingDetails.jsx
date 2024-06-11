@@ -1,20 +1,25 @@
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import PageContainer from "../FlexContainer.jsx"
 import { Badge, Button, Card, CardBody, CardImg, CardImgOverlay } from "reactstrap"
 import { useEffect, useState } from "react"
-import {  getListingById } from "../../managers/listingManger.js"
+import {  deleteListing, getListingById } from "../../managers/listingManger.js"
 
 export default function ListingDetails({loggedInUser})
 {
 
     const [listing, setListing] = useState()
    
+    const navigate = useNavigate()
 
     const {id} = useParams()
 
     useEffect(() => {
         getListingById(parseInt(id)).then(setListing)
     },[])
+
+    const handleDelete = (id) => {
+        deleteListing(parseInt(id)).then(() => {navigate("/listings")})
+    }
 
     return(
        <PageContainer>
@@ -24,7 +29,7 @@ export default function ListingDetails({loggedInUser})
                     alt="Listing Header Image"
                     src={listing?.productImg}
                 />
-                <CardImgOverlay>
+                <CardImgOverlay className="pe-none">
                     <Badge className="fs-4 "pill>
                         {listing?.title}
                     </Badge>
@@ -37,8 +42,8 @@ export default function ListingDetails({loggedInUser})
                         </Badge>
                     </div>
                   {listing?.categories.map((c) => (
-                    <div className="pe-auto fs-5" key={c.id}>
-                        <Badge pill>
+                    <div className="w-25 pe-auto fs-5" key={c.id}>
+                        <Badge className="pe-none" pill>
                             {c.name}
                         </Badge>
                     </div>
@@ -57,7 +62,8 @@ export default function ListingDetails({loggedInUser})
                     Edit
                 </Button>
                 {listing?.userProfile.id == loggedInUser.id && (
-                <Button className="me-2 mb-1">
+                <Button className="me-2 mb-1"
+                onClick={() => {handleDelete(listing.id)}}>
                     DELETE
                 </Button>
 

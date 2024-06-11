@@ -135,8 +135,8 @@ public class ListingController : ControllerBase
 
     }
 
-    [HttpDelete]
-    [Authorize]
+    [HttpDelete("{id}")]
+    // [Authorize]
     public IActionResult DeleteListing(int id)
     {
         Listing foundListing = _dbContext.Listing.SingleOrDefault(l => l.Id == id);

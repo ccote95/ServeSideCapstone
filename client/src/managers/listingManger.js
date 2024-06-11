@@ -29,10 +29,7 @@ export const createListing = (listing) => {
 };
 
 export const deleteListing = (id) => {
-    return fetch(`${_api}?id=${id}`,{
-        method: "DELETE",
-        headers: {
-            "Content - type":"application/json"
-        }
+    return fetch(`${_api}/${id}`,{
+        method: "DELETE"
     })
 }
