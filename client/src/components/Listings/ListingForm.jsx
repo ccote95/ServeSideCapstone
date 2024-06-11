@@ -74,7 +74,7 @@ export default function ListingForm({loggedInUser})
             const byteArray = new Uint8Array(byteNumbers);
             formData.append("formFile", new Blob([byteArray]));
             
-            updateListing(parseInt(id), formData)
+            updateListing(parseInt(id), formData).then(() => {navigate(`../`)})
                 .then(data => {
                     console.log('Success:', data);
                 })
