@@ -134,4 +134,21 @@ public class ListingController : ControllerBase
 
 
     }
+
+    [HttpDelete]
+    [Authorize]
+    public IActionResult DeleteListing(int id)
+    {
+        Listing foundListing = _dbContext.Listing.SingleOrDefault(l => l.Id == id);
+
+        if (foundListing == null)
+        {
+            return BadRequest();
+        }
+
+        _dbContext.Listing.Remove(foundListing);
+        _dbContext.SaveChanges();
+
+        return NoContent();
+    }
 }
