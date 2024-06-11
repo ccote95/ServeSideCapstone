@@ -30,6 +30,7 @@ public class ListingController : ControllerBase
             UserProfileId = l.UserProfileId,
             Title = l.Title,
             ProductImg = l.ProductImg,
+            ImageBlob = l.ImageBlob,
             Price = l.Price,
             Categories = l.ListingCategories.Select(lc => new CategoryNoNavDTO()
             {

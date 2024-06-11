@@ -10,6 +10,8 @@ export default function AllListings()
 
     const navigate = useNavigate()
 
+    
+
 
     useEffect(() => {
         getAll().then(setListings)
@@ -24,11 +26,16 @@ export default function AllListings()
         {listings.map((l) => (
             <Card className="w-25 d-flex flex-column  shadow" key={l.id} style={{maxWidth: "1200px"}}>
                 <CardLink href={`listings/${l.id}`}>
-                    <CardImg
-                        className="w-50 m-auto rounded mt-1 ms-1"
-                        style={{maxHeight: "150px"}}
-                        src={l.productImg}
-                    />
+                {!l.imageBlob ? (
+                <CardImg
+                
+                  src={
+                    l.productImg
+                  }
+                />
+              ) : (
+                <CardImg src={`data:image/jpeg;base64,${l.imageBlob}`} />
+              )}
 
                 </CardLink>
                 <CardBody>
