@@ -37,9 +37,6 @@ export const deleteListing = (id) => {
 export const updateListing = (id,updateListing) => {
     return fetch(`${_api}/${id}`,{
         method: "PUT",
-        headers: {
-            "Content-Type":"application/json"
-        },
-        body: JSON.stringify(updateListing)
+        body: updateListing
     })
 }

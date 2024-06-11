@@ -31,6 +31,7 @@ export default function AllListings()
                         src={l.productImg}
                     />
                 ) : (
+                    // <CardImg src={l.imageBlob} />
                     <CardImg src={`data:image/jpeg;base64,${l.imageBlob}`} />
                 )}
                     </CardLink>

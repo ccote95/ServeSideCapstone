@@ -155,7 +155,7 @@ public class ListingController : ControllerBase
 
     [HttpPut("{id}")]
     [Authorize]
-    public IActionResult UpdateListing(int id, UpdateListingDTO listingUpdate)
+    public IActionResult UpdateListing(int id, [FromForm] UpdateListingDTO listingUpdate)
     {
         Listing foundListing = _dbContext.Listing.SingleOrDefault(l => l.Id == id);
 
@@ -166,7 +166,6 @@ public class ListingController : ControllerBase
 
         foundListing.Title = listingUpdate.Title;
         foundListing.Content = listingUpdate.Content;
-        foundListing.ImageBlob = listingUpdate.ImageBlob;
         foundListing.Price = listingUpdate.Price;
 
         List<ListingCategory> listingCategoriesToRemove = _dbContext.ListingCategory.Where(lc => lc.ListingId == id).ToList();
@@ -176,23 +175,30 @@ public class ListingController : ControllerBase
         }
         _dbContext.SaveChanges();
 
-        foreach (ListingCategoryDTO listingCategory in listingUpdate.ListingCategories)
+        foreach (int CategoryId in listingUpdate.CategoryIds)
         {
             _dbContext.ListingCategory.Add(new ListingCategory()
             {
-                ListingId = listingCategory.ListingId,
-                CategoryId = listingCategory.CategoryId
+                ListingId = foundListing.Id,
+                CategoryId = CategoryId
             }
             );
         }
 
+
+        if (listingUpdate.FormFile != null)
+        {
+            byte[] file;
+            using (var memoryStream = new MemoryStream())
+            {
+                listingUpdate.FormFile.CopyTo(memoryStream);
+                file = memoryStream.ToArray();
+            }
+
+            foundListing.ImageBlob = file;
+        }
         _dbContext.SaveChanges();
 
         return NoContent();
-
-
-
-
-
     }
 }

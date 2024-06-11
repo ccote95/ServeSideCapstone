@@ -1,6 +1,7 @@
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.FileProviders;
 using ServerSideCapstone.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -64,6 +65,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseStaticFiles();
+
 
 app.UseHttpsRedirection();
 // these two calls are required to add auth to the pipeline for a request
