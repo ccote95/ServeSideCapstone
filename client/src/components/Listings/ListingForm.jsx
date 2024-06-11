@@ -1,7 +1,7 @@
 import { Button, Col,Form, FormGroup, Input, Label, Row } from "reactstrap";
 import PageContainer from "../PageContainer.jsx";
 import { useEffect, useState } from "react";
-import { getAll } from "../../managers/categoryManager.js";
+import {  getAllCategories } from "../../managers/categoryManager.js";
 import { createListing, getListingById, updateListing } from "../../managers/listingManger.js";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -21,7 +21,7 @@ export default function ListingForm({loggedInUser})
     const {id} = useParams()
 
     useEffect(() => {
-        getAll().then(setCategories)
+        getAllCategories().then(setCategories)
 
         if(id){
             getListingById(id).then(listing => {

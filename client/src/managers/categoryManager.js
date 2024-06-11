@@ -1,5 +1,5 @@
 const _api = "/api/category"
 
-export const getAll = () => {
+export const getAllCategories = () => {
     return fetch(_api).then(res => res.json())
 }
