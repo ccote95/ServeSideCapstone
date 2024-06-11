@@ -1,24 +1,36 @@
-import { Button, Col, Dropdown, DropdownToggle, Form, FormGroup, Input, Label, Row } from "reactstrap";
+import { Button, Col,Form, FormGroup, Input, Label, Row } from "reactstrap";
 import PageContainer from "../PageContainer.jsx";
 import { useEffect, useState } from "react";
 import { getAll } from "../../managers/categoryManager.js";
-import { createListing } from "../../managers/listingManger.js";
-import { useNavigate } from "react-router-dom";
+import { createListing, getListingById } from "../../managers/listingManger.js";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function ListingForm({loggedInUser})
 {
     const [categories, setCategories] = useState()
     const [title, setTitle] = useState("")
-    const [categoryIds, setCategoryIds] = useState([])
     const [content, setContent] = useState("")
     const [price, setPrice] = useState(0)
     const [image, setImage] = useState()
+    const [imagePreview, setImagePreview] = useState()
     const [chosenCategories, setChosenCategories] = useState([])
 
     const navigate = useNavigate()
 
+    const {id} = useParams()
+
     useEffect(() => {
         getAll().then(setCategories)
+
+        if(id){
+            getListingById(id).then(listing => {
+                setTitle(listing.title)
+                setContent(listing.content)
+                setPrice(listing.price)
+                setImagePreview(`data:image/jpeg;base64,${listing.imageBlob}`)
+                setChosenCategories(listing.categories.map(c => c.id))
+            })
+        }
     },[])
 
     const handleCheckBoxChange = (categoryId) => {
@@ -54,6 +66,7 @@ export default function ListingForm({loggedInUser})
         console.error('Error:', error);
     });
     }
+    
     return (
       
    <PageContainer>
@@ -64,6 +77,7 @@ export default function ListingForm({loggedInUser})
                 </Label>
                 <Input
                 required
+                value={title}
                 placeholder="Enter the Title for the Listing"
                 style={{width: "100%"}}
                 onChange={(e) => {setTitle(e.target.value)}}
@@ -77,9 +91,10 @@ export default function ListingForm({loggedInUser})
                 <FormGroup check>
                     <Label check>
                     <Input
-                    required
+                        required
                         type="checkbox"
                         value={c.id}
+                        checked = {chosenCategories.includes(c.id)}
                         onChange={() => handleCheckBoxChange(c.id)}
                     />
                     {c.name}
@@ -96,12 +111,14 @@ export default function ListingForm({loggedInUser})
                 type="number"
                  step="0.01"
                  min="0"
+                 value={price}
                 placeholder="Enter a price (a dollar amount)"
                 onChange={(e) => {setPrice(e.target.value)}}/>
             </FormGroup>
             <FormGroup>
                 <Label>Content</Label>
                 <Input
+                value={content}
                 required
                 placeholder="Add a description of your itme"
                 onChange={(e) => {setContent(e.target.value)}}/>
@@ -110,8 +127,10 @@ export default function ListingForm({loggedInUser})
                 <Label>Image</Label>
                 <Input
                 type="file"
+               
                 onChange={(e) => {setImage(e.target.files[0])}}/>
             </FormGroup>
+            {imagePreview && <img src={imagePreview} alt="Preview" style={{ maxWidth: "50%", height: "auto" }} />}
         <Button type="submit" style={{float: "right"}} color="primary">
             Post
         </Button>

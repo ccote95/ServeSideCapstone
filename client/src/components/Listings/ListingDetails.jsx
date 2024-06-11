@@ -67,7 +67,8 @@ export default function ListingDetails({loggedInUser})
                 onClick={() => {handleDelete(listing.id)}}>
                     DELETE
                 </Button>
-               <Button className="me-2 mb-1">
+               <Button className="me-2 mb-1"
+               onClick={() => {navigate("edit")}}>
                     Edit
                 </Button>
                 </>
