@@ -90,7 +90,7 @@ public class ListingController : ControllerBase
     }
 
     [HttpPost]
-    // [Authorize]
+    [Authorize]
     public IActionResult CreateListing([FromForm] CreateListingDTO newListing)
     {
         string identityUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -137,7 +137,7 @@ public class ListingController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    // [Authorize]
+    [Authorize]
     public IActionResult DeleteListing(int id)
     {
         Listing foundListing = _dbContext.Listing.SingleOrDefault(l => l.Id == id);
@@ -148,6 +148,55 @@ public class ListingController : ControllerBase
         }
 
         _dbContext.Listing.Remove(foundListing);
+        _dbContext.SaveChanges();
+
+        return NoContent();
+    }
+
+    [HttpPut("{id}")]
+    [Authorize]
+    public IActionResult UpdateListing(int id, [FromForm] UpdateListingDTO listingUpdate)
+    {
+        Listing foundListing = _dbContext.Listing.SingleOrDefault(l => l.Id == id);
+
+        if (foundListing == null)
+        {
+            return BadRequest();
+        }
+
+        foundListing.Title = listingUpdate.Title;
+        foundListing.Content = listingUpdate.Content;
+        foundListing.Price = listingUpdate.Price;
+
+        List<ListingCategory> listingCategoriesToRemove = _dbContext.ListingCategory.Where(lc => lc.ListingId == id).ToList();
+        foreach (ListingCategory listingCategory in listingCategoriesToRemove)
+        {
+            _dbContext.ListingCategory.Remove(listingCategory);
+        }
+        _dbContext.SaveChanges();
+
+        foreach (int CategoryId in listingUpdate.CategoryIds)
+        {
+            _dbContext.ListingCategory.Add(new ListingCategory()
+            {
+                ListingId = foundListing.Id,
+                CategoryId = CategoryId
+            }
+            );
+        }
+
+
+        if (listingUpdate.FormFile != null)
+        {
+            byte[] file;
+            using (var memoryStream = new MemoryStream())
+            {
+                listingUpdate.FormFile.CopyTo(memoryStream);
+                file = memoryStream.ToArray();
+            }
+
+            foundListing.ImageBlob = file;
+        }
         _dbContext.SaveChanges();
 
         return NoContent();

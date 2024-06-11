@@ -33,3 +33,10 @@ export const deleteListing = (id) => {
         method: "DELETE"
     })
 }
+
+export const updateListing = (id,updateListing) => {
+    return fetch(`${_api}/${id}`,{
+        method: "PUT",
+        body: updateListing
+    })
+}

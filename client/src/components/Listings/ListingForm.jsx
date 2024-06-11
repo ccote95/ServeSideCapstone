@@ -1,24 +1,43 @@
-import { Button, Col, Dropdown, DropdownToggle, Form, FormGroup, Input, Label, Row } from "reactstrap";
+import { Button, Col,Form, FormGroup, Input, Label, Row } from "reactstrap";
 import PageContainer from "../PageContainer.jsx";
 import { useEffect, useState } from "react";
 import { getAll } from "../../managers/categoryManager.js";
-import { createListing } from "../../managers/listingManger.js";
-import { useNavigate } from "react-router-dom";
+import { createListing, getListingById, updateListing } from "../../managers/listingManger.js";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function ListingForm({loggedInUser})
 {
     const [categories, setCategories] = useState()
     const [title, setTitle] = useState("")
-    const [categoryIds, setCategoryIds] = useState([])
     const [content, setContent] = useState("")
     const [price, setPrice] = useState(0)
     const [image, setImage] = useState()
+    const [imagePreview, setImagePreview] = useState()
     const [chosenCategories, setChosenCategories] = useState([])
+    const [originalImage, setOriginalImage] = useState()
 
     const navigate = useNavigate()
 
+    const {id} = useParams()
+
     useEffect(() => {
         getAll().then(setCategories)
+
+        if(id){
+            getListingById(id).then(listing => {
+                setTitle(listing.title)
+                setContent(listing.content)
+                setPrice(listing.price)
+                setImagePreview(`data:image/jpeg;base64,${listing.imageBlob}`)
+                setChosenCategories(listing.categories.map(c => c.id))
+                setImage(new File([listing.imageBlob], "existing-image.jpg", { type: "image/jpeg" }));
+                setOriginalImage(listing.imageBlob)
+                console.log(typeof(listing.imageBlob))
+                console.log(originalImage)
+
+                var image = new File([listing.imageBlob], "existing-image.jpg", { type: "image/jpeg" })
+            })
+        }
     },[])
 
     const handleCheckBoxChange = (categoryId) => {
@@ -36,24 +55,47 @@ export default function ListingForm({loggedInUser})
 
 
     const onSubmit = (e) => {
-        e.preventDefault()
-        const formData = new FormData()
-        formData.append("formFile", image)
-        formData.append("title", title)
+        e.preventDefault();
+        const formData = new FormData();
+        
+        formData.append("title", title);
         chosenCategories.forEach(id => formData.append('CategoryIds', id));
-        formData.append("content", content)
-        formData.append("price", price)
-        formData.append("userProfileId", loggedInUser.id)
-
-
-        createListing(formData).then(() => {navigate("/Listings")})
-    .then(data => {
-        console.log('Success:', data);
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
+        formData.append("content", content);
+        formData.append("price", price);
+        formData.append("userProfileId", loggedInUser.id);
+    
+        if (id) {
+            // Here, we convert the originalImage string to a byte array using base64 encoding
+            const byteCharacters = atob(originalImage);
+            const byteNumbers = new Array(byteCharacters.length);
+            for (let i = 0; i < byteCharacters.length; i++) {
+                byteNumbers[i] = byteCharacters.charCodeAt(i);
+            }
+            const byteArray = new Uint8Array(byteNumbers);
+            formData.append("formFile", new Blob([byteArray]));
+            
+            updateListing(parseInt(id), formData).then(() => {navigate(`../`)})
+                .then(data => {
+                    console.log('Success:', data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        } else {
+            formData.append("formFile", image);
+            createListing(formData)
+                .then(() => {
+                    navigate("/Listings");
+                })
+                .then(data => {
+                    console.log('Success:', data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
     }
+    
     return (
       
    <PageContainer>
@@ -64,6 +106,7 @@ export default function ListingForm({loggedInUser})
                 </Label>
                 <Input
                 required
+                value={title}
                 placeholder="Enter the Title for the Listing"
                 style={{width: "100%"}}
                 onChange={(e) => {setTitle(e.target.value)}}
@@ -77,9 +120,9 @@ export default function ListingForm({loggedInUser})
                 <FormGroup check>
                     <Label check>
                     <Input
-                    required
                         type="checkbox"
                         value={c.id}
+                        checked = {chosenCategories.includes(c.id)}
                         onChange={() => handleCheckBoxChange(c.id)}
                     />
                     {c.name}
@@ -96,12 +139,14 @@ export default function ListingForm({loggedInUser})
                 type="number"
                  step="0.01"
                  min="0"
+                 value={price}
                 placeholder="Enter a price (a dollar amount)"
                 onChange={(e) => {setPrice(e.target.value)}}/>
             </FormGroup>
             <FormGroup>
                 <Label>Content</Label>
                 <Input
+                value={content}
                 required
                 placeholder="Add a description of your itme"
                 onChange={(e) => {setContent(e.target.value)}}/>
@@ -110,11 +155,17 @@ export default function ListingForm({loggedInUser})
                 <Label>Image</Label>
                 <Input
                 type="file"
+               
                 onChange={(e) => {setImage(e.target.files[0])}}/>
             </FormGroup>
-        <Button type="submit" style={{float: "right"}} color="primary">
+            {imagePreview && <img src={imagePreview} alt="Preview" style={{ maxWidth: "50%", height: "auto" }} />}
+            {id ? (
+                <Button type="submit" style={{float: "right"}} color="primary">Save</Button>
+            ) :(
+                <Button type="submit" style={{float: "right"}} color="primary">
             Post
         </Button>
+            )}
        </Form>
    </PageContainer>
       

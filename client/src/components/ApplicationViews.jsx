@@ -6,6 +6,7 @@ import AllListings from "./Listings/AllListings.jsx";
 import LandingPage from "./LandingPage.jsx";
 import ListingDetails from "./Listings/ListingDetails.jsx";
 import CreateListing from "./Listings/CreateListing.jsx";
+import ListingForm from "./Listings/ListingForm.jsx";
 
 
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
@@ -28,26 +29,34 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
               <AllListings loggedInUser={loggedInUser}/>
             </AuthorizedRoute>
           }
-        />
-        <Route path=":id">
-          <Route
-            index
-            element={
-              <AuthorizedRoute loggedInUser={loggedInUser}>
-                <ListingDetails loggedInUser={loggedInUser}/>
-              </AuthorizedRoute>
-            }
           />
-        </Route>
-        <Route path="create">
-          <Route
-            index
-            element={
-              <AuthorizedRoute loggedInUser={loggedInUser}>
-                <CreateListing loggedInUser={loggedInUser}/>
-              </AuthorizedRoute>
-            }
-        />
+          <Route path=":id">
+            <Route
+              index
+              element={
+                <AuthorizedRoute loggedInUser={loggedInUser}>
+                  <ListingDetails loggedInUser={loggedInUser}/>
+                </AuthorizedRoute>
+              }
+            />
+            <Route
+              path="edit"
+              element = {
+                <AuthorizedRoute loggedInUser={loggedInUser}>
+                  <ListingForm loggedInUser={loggedInUser}/>
+                </AuthorizedRoute>
+              }
+            />
+          </Route>
+          <Route path="create">
+            <Route
+              index
+              element={
+                <AuthorizedRoute loggedInUser={loggedInUser}>
+                  <CreateListing loggedInUser={loggedInUser}/>
+                </AuthorizedRoute>
+              }
+          />
         </Route>
       </Route>
       
