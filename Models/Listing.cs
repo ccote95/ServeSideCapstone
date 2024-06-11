@@ -10,8 +10,8 @@ public class Listing
     public string Title { get; set; }
     public decimal Price { get; set; }
 
-    public string ProductImg { get; set; }
-    public byte[] ImageBlob { get; set; }
+    public string? ProductImg { get; set; }
+    public byte[]? ImageBlob { get; set; }
 
     [Required]
     public string Content { get; set; }

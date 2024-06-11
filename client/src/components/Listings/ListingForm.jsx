@@ -1,9 +1,10 @@
-import { Button, Dropdown, DropdownToggle, Form, FormGroup, Input, Label } from "reactstrap";
+import { Button, Col, Dropdown, DropdownToggle, Form, FormGroup, Input, Label, Row } from "reactstrap";
 import PageContainer from "../PageContainer.jsx";
 import { useEffect, useState } from "react";
 import { getAll } from "../../managers/categoryManager.js";
+import { createListing } from "../../managers/listingManger.js";
 
-export default function ListingForm()
+export default function ListingForm({loggedInUser})
 {
     const [categories, setCategories] = useState()
     const [title, setTitle] = useState("")
@@ -31,19 +32,29 @@ export default function ListingForm()
     }
 
 
-    const onSubmit = () => {
+    const onSubmit = (e) => {
+        e.preventDefault()
         const formData = new FormData()
         formData.append("formFile", image)
         formData.append("title", title)
-        formData.append("categoryIds",categoryIds)
+        chosenCategories.forEach(id => formData.append('CategoryIds', id));
         formData.append("content", content)
         formData.append("price", price)
+        formData.append("userProfileId", loggedInUser.id)
 
+
+        createListing(formData)
+    .then(data => {
+        console.log('Success:', data);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
     }
     return (
       
    <PageContainer>
-        <Form>
+        <Form onSubmit={(e) => {onSubmit(e)}}>
             <FormGroup>
                 <Label>
                     Title
@@ -55,23 +66,30 @@ export default function ListingForm()
                 />
             </FormGroup>
             
-                <Label>Category (choose one or more)</Label>
-                {categories?.map((c) =>(
-                    <FormGroup>
-                        <Input
+            <Label>Category (choose one or more)</Label>
+            <Row>
+            {categories?.map((c) => (
+                <Col key={c.id} xs="auto">
+                <FormGroup check>
+                    <Label check>
+                    <Input
                         type="checkbox"
                         value={c.id}
                         onChange={() => handleCheckBoxChange(c.id)}
-                        />
-                        <Label>{c.name}</Label>
-
-                    </FormGroup>
-                ))}
+                    />
+                    {c.name}
+                    </Label>
+                </FormGroup>
+                </Col>
+            ))}
+            </Row>
           
             <FormGroup>
                 <Label>Price</Label>
                 <Input
                 type="number"
+                 step="0.01"
+                 min="0"
                 placeholder="Enter a price (a dollar amount)"
                 onChange={(e) => {setPrice(e.target.value)}}/>
             </FormGroup>
@@ -87,7 +105,7 @@ export default function ListingForm()
                 type="file"
                 onChange={(e) => {setImage(e.target.files[0])}}/>
             </FormGroup>
-        <Button style={{float: "right"}} color="primary">
+        <Button type="submit" style={{float: "right"}} color="primary">
             Post
         </Button>
        </Form>

@@ -10,16 +10,10 @@ public class CreateListingDTO
     public string Title { get; set; }
     [Required]
     public decimal Price { get; set; }
-
-    public string ProductImg { get; set; }
-    public FormFile FormFile { get; set; }
-
+    public IFormFile FormFile { get; set; }
     [Required]
     public string Content { get; set; }
-
-    [Required]
-    public DateTime CreatedOn { get; set; }
     public List<int> CategoryIds { get; set; }
 
-    public List<ListingCategory> ListingCategories { get; set; }
+
 }

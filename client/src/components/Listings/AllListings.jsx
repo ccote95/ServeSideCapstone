@@ -2,10 +2,13 @@ import { useEffect, useState } from "react"
 import { getAll } from "../../managers/listingManger.js"
 import { Button, Card, CardBody, CardImg, CardLink, CardSubtitle, CardTitle } from "reactstrap"
 import FlexContainer from "../FlexContainer.jsx"
+import { useNavigate } from "react-router-dom"
 
 export default function AllListings()
 {
     const [listings, setListings] = useState([])
+
+    const navigate = useNavigate()
 
 
     useEffect(() => {
@@ -14,7 +17,7 @@ export default function AllListings()
 
     return(
         <div>
-            <Button className="ms-2 mt-2" color="primary">
+            <Button className="ms-2 mt-2" color="primary" onClick={() => {navigate("create")}}>
                 New Listing
             </Button>
         <FlexContainer>

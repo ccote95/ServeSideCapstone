@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -88,13 +89,16 @@ public class ListingController : ControllerBase
 
     [HttpPost]
     // [Authorize]
-    public IActionResult CreateListing(CreateListingDTO newListing, int id)
+    public IActionResult CreateListing([FromForm] CreateListingDTO newListing)
     {
-        UserProfile user = _dbContext.UserProfiles.FirstOrDefault(up => up.Id == id);
+        string identityUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        UserProfile profile = _dbContext.UserProfiles.SingleOrDefault(up =>
+            up.IdentityUserId == identityUserId
+        );
 
         Listing listing = new Listing()
         {
-            UserProfileId = user.Id,
+            UserProfileId = profile.Id,
             Title = newListing.Title,
             Price = newListing.Price,
             Content = newListing.Content,
@@ -125,7 +129,7 @@ public class ListingController : ControllerBase
 
         _dbContext.SaveChanges();
 
-        return NoContent();
+        return Ok();
 
 
     }
