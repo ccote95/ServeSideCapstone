@@ -90,7 +90,7 @@ public class ListingController : ControllerBase
     }
 
     [HttpPost]
-    // [Authorize]
+    [Authorize]
     public IActionResult CreateListing([FromForm] CreateListingDTO newListing)
     {
         string identityUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -137,7 +137,7 @@ public class ListingController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    // [Authorize]
+    [Authorize]
     public IActionResult DeleteListing(int id)
     {
         Listing foundListing = _dbContext.Listing.SingleOrDefault(l => l.Id == id);
@@ -151,5 +151,48 @@ public class ListingController : ControllerBase
         _dbContext.SaveChanges();
 
         return NoContent();
+    }
+
+    [HttpPut("{id}")]
+    [Authorize]
+    public IActionResult UpdateListing(int id, UpdateListingDTO listingUpdate)
+    {
+        Listing foundListing = _dbContext.Listing.SingleOrDefault(l => l.Id == id);
+
+        if (foundListing == null)
+        {
+            return BadRequest();
+        }
+
+        foundListing.Title = listingUpdate.Title;
+        foundListing.Content = listingUpdate.Content;
+        foundListing.ImageBlob = listingUpdate.ImageBlob;
+        foundListing.Price = listingUpdate.Price;
+
+        List<ListingCategory> listingCategoriesToRemove = _dbContext.ListingCategory.Where(lc => lc.ListingId == id).ToList();
+        foreach (ListingCategory listingCategory in listingCategoriesToRemove)
+        {
+            _dbContext.ListingCategory.Remove(listingCategory);
+        }
+        _dbContext.SaveChanges();
+
+        foreach (ListingCategoryDTO listingCategory in listingUpdate.ListingCategories)
+        {
+            _dbContext.ListingCategory.Add(new ListingCategory()
+            {
+                ListingId = listingCategory.ListingId,
+                CategoryId = listingCategory.CategoryId
+            }
+            );
+        }
+
+        _dbContext.SaveChanges();
+
+        return NoContent();
+
+
+
+
+
     }
 }

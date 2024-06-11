@@ -60,15 +60,17 @@ export default function ListingDetails({loggedInUser})
                     {listing?.content}
                 </CardBody>
                <div className="d-flex flex-row flex-wrap mt-3 w-100 gap-2 justify-content-md-end " >
-               <Button className="me-2 mb-1">
-                    Edit
-                </Button>
+                
                 {listing?.userProfile.id == loggedInUser.id && (
+                    <>
                 <Button className="me-2 mb-1"
                 onClick={() => {handleDelete(listing.id)}}>
                     DELETE
                 </Button>
-
+               <Button className="me-2 mb-1">
+                    Edit
+                </Button>
+                </>
                 )}
                </div>
             </Card>
