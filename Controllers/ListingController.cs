@@ -1,6 +1,9 @@
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ServerSideCapstone.Data;
+using ServerSideCapstone.Models;
 using ServerSideCapstone.Models.DTOs;
 
 [ApiController]
@@ -27,6 +30,7 @@ public class ListingController : ControllerBase
             UserProfileId = l.UserProfileId,
             Title = l.Title,
             ProductImg = l.ProductImg,
+            ImageBlob = l.ImageBlob,
             Price = l.Price,
             Categories = l.ListingCategories.Select(lc => new CategoryNoNavDTO()
             {
@@ -82,5 +86,52 @@ public class ListingController : ControllerBase
 
                 }
             }).FirstOrDefault(l => l.Id == id));
+    }
+
+    [HttpPost]
+    // [Authorize]
+    public IActionResult CreateListing([FromForm] CreateListingDTO newListing)
+    {
+        string identityUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        UserProfile profile = _dbContext.UserProfiles.SingleOrDefault(up =>
+            up.IdentityUserId == identityUserId
+        );
+
+        Listing listing = new Listing()
+        {
+            UserProfileId = profile.Id,
+            Title = newListing.Title,
+            Price = newListing.Price,
+            Content = newListing.Content,
+            CreatedOn = DateTime.Now,
+        };
+
+        _dbContext.Listing.Add(listing);
+        _dbContext.SaveChanges();
+
+        foreach (int categoryId in newListing.CategoryIds)
+        {
+            ListingCategory listingCategory = new ListingCategory { ListingId = listing.Id, CategoryId = categoryId };
+
+            _dbContext.ListingCategory.Add(listingCategory);
+        }
+
+        if (newListing.FormFile != null)
+        {
+            byte[] file;
+            using (var memoryStream = new MemoryStream())
+            {
+                newListing.FormFile.CopyTo(memoryStream);
+                file = memoryStream.ToArray();
+            }
+
+            listing.ImageBlob = file;
+        }
+
+        _dbContext.SaveChanges();
+
+        return Ok();
+
+
     }
 }

@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom"
-import PageContainer from "../PageContainer.jsx"
+import PageContainer from "../FlexContainer.jsx"
 import { Badge, Button, Card, CardBody, CardImg, CardImgOverlay } from "reactstrap"
 import { useEffect, useState } from "react"
 import {  getListingById } from "../../managers/listingManger.js"
