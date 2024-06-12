@@ -62,22 +62,27 @@ export default function AllListings()
             </Input>
             <FlexContainer>
             {filteredListings?.map((l) => (
-                <Card className="w-25 d-flex flex-column  shadow" key={l.id} style={{maxWidth: "1200px"}}>
+                <Card className="w-25 d-flex flex-column  shadow" key={l.id} style={{maxWidth: "1200px",  height: "400px"}}>
                     <CardLink href={`listings/${l.id}`}>
                     {!l.imageBlob ? (
                     <CardImg
+                        className="mt-1"
                         src={l.productImg}
+                       style={{ height: "200px", objectFit: "contain" }}
                     />
                 ) : (
-                    // <CardImg src={l.imageBlob} />
-                    <CardImg src={`data:image/jpeg;base64,${l.imageBlob}`} />
+                    <CardImg 
+                    src={`data:image/jpeg;base64,${l.imageBlob}`}
+                    style={{ height: "200px", objectFit: "contain" }} 
+                    className="mt-1"
+                    />
                 )}
                     </CardLink>
                     <CardBody>
-                        <CardTitle className="m-1 fw-bold">
+                        <CardTitle className="m-1 fs-1 fw-bold">
                             {l.title}
                         </CardTitle>
-                    <CardSubtitle className="m-1">
+                    <CardSubtitle className="m-1 fs-2">
                         ${l.price}
                     </CardSubtitle>
                     
