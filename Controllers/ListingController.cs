@@ -89,6 +89,42 @@ public class ListingController : ControllerBase
             }).FirstOrDefault(l => l.Id == id));
     }
 
+    [HttpGet("listing/{userId}")]
+    [Authorize]
+    public IActionResult GetAllById(int userId)
+    {
+        return Ok(_dbContext.Listing
+        .Include(l => l.UserProfile)
+        .Include(l => l.ListingCategories)
+            .ThenInclude(lc => lc.Category)
+        .Where(l => l.UserProfileId == userId)
+            .Select(l => new ListingsListDTO()
+            {
+                Id = l.Id,
+                UserProfileId = l.UserProfileId,
+                Title = l.Title,
+                ProductImg = l.ProductImg,
+                ImageBlob = l.ImageBlob,
+                Price = l.Price,
+                Categories = l.ListingCategories.Select(lc => new CategoryNoNavDTO()
+                {
+                    Id = lc.Category.Id,
+                    Name = lc.Category.Name
+                }).ToList(),
+                Content = l.Content,
+                CreatedOn = l.CreatedOn,
+                UserProfile = new UserProfileForListingsDTO()
+                {
+                    Id = l.UserProfile.Id,
+                    FirstName = l.UserProfile.FirstName,
+                    LastName = l.UserProfile.LastName,
+                    ImgLocation = l.UserProfile.ImgLocation
+
+
+                }
+            }).ToList());
+    }
+
     [HttpPost]
     [Authorize]
     public IActionResult CreateListing([FromForm] CreateListingDTO newListing)
