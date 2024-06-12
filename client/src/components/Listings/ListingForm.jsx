@@ -30,7 +30,7 @@ export default function ListingForm({loggedInUser})
                 setPrice(listing.price)
                 setImagePreview(`data:image/jpeg;base64,${listing.imageBlob}`)
                 setChosenCategories(listing.categories.map(c => c.id))
-                setImage(new File([listing.imageBlob], "existing-image.jpg", { type: "image/jpeg" }));
+               
                 setOriginalImage(listing.imageBlob)
                 console.log(typeof(listing.imageBlob))
                 console.log(originalImage)
@@ -65,36 +65,31 @@ export default function ListingForm({loggedInUser})
         formData.append("userProfileId", loggedInUser.id);
     
         if (id) {
-            // Here, we convert the originalImage string to a byte array using base64 encoding
-            const byteCharacters = atob(originalImage);
-            const byteNumbers = new Array(byteCharacters.length);
-            for (let i = 0; i < byteCharacters.length; i++) {
-                byteNumbers[i] = byteCharacters.charCodeAt(i);
+            // If an image is chosen, use it; otherwise, use the original image
+            if (image) {
+                formData.append("formFile", image);
+            } else if (originalImage) {
+                const byteCharacters = atob(originalImage);
+                const byteNumbers = new Array(byteCharacters.length);
+                for (let i = 0; i < byteCharacters.length; i++) {
+                    byteNumbers[i] = byteCharacters.charCodeAt(i);
+                }
+                const byteArray = new Uint8Array(byteNumbers);
+                formData.append("formFile", new Blob([byteArray]));
             }
-            const byteArray = new Uint8Array(byteNumbers);
-            formData.append("formFile", new Blob([byteArray]));
-            
-            updateListing(parseInt(id), formData).then(() => {navigate(`../`)})
-                .then(data => {
-                    console.log('Success:', data);
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
+    
+            updateListing(parseInt(id), formData)
+                .then(() => navigate(`../`))
         } else {
-            formData.append("formFile", image);
-            createListing(formData)
-                .then(() => {
-                    navigate("/Listings");
-                })
-                .then(data => {
-                    console.log('Success:', data);
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
+            // For creating a new listing, only use the image if it's present
+            if (image) {
+                formData.append("formFile", image);
+            }
+    
+            createListing(formData).then(() => {navigate("/listings")})
+           
         }
-    }
+    };
     
     return (
       
@@ -146,6 +141,7 @@ export default function ListingForm({loggedInUser})
             <FormGroup>
                 <Label>Content</Label>
                 <Input
+                type="textarea"
                 value={content}
                 required
                 placeholder="Add a description of your itme"

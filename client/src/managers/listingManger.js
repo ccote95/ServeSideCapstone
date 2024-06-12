@@ -14,18 +14,19 @@ export const createListing = (listing) => {
     return fetch("/api/listing", {
         method: "POST",
         body: listing
-    }).then(response => {
-        if (!response.ok) {
-            return response.text().then(text => {
-                console.error('Response text:', text);
-                throw new Error('Network response was not ok');
-            });
-        }
-        return response.json();
-    }).catch((e) => {
-        console.error('There was a problem with the fetch operation:', e);
-        throw e;
-    });
+    })
+    // .then(response => {
+    //     if (!response.ok) {
+    //         return response.text().then(text => {
+    //             console.error('Response text:', text);
+    //             throw new Error('Network response was not ok');
+    //         });
+    //     }
+    //     return response.json();
+    // }).catch((e) => {
+    //     console.error('There was a problem with the fetch operation:', e);
+    //     throw e;
+    // });
 };
 
 export const deleteListing = (id) => {
