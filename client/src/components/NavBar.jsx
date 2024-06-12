@@ -33,6 +33,11 @@ return (
                         Listings
                     </NavLink>
                 </NavItem>
+                <NavItem>
+                    <NavLink tag={RRNavLink} to ="/listings/myListings">
+                        My Listings
+                    </NavLink>
+                </NavItem>
             </Nav>
             </Collapse>
             <Button
