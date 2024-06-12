@@ -9,6 +9,7 @@ import CreateListing from "./Listings/CreateListing.jsx";
 import ListingForm from "./Listings/ListingForm.jsx";
 import MyListings from "./Listings/MyListings.jsx";
 import MyProfile from "./UserProfile/MyProfile.jsx";
+import EditMyProfile from "./UserProfile/EditMyProfile.jsx";
 
 
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
@@ -79,6 +80,16 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
                 <MyProfile loggedInUser={loggedInUser}/>
               </AuthorizedRoute>
             }/>
+            <Route path=":id">
+              <Route
+                index
+                element={
+                  <AuthorizedRoute loggedInUser={loggedInUser}>
+                    <EditMyProfile loggedInUser={loggedInUser}/>
+                  </AuthorizedRoute>
+                }
+              />
+            </Route>
       </Route>
       
         <Route
