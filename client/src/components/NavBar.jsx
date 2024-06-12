@@ -21,7 +21,7 @@ return (
     <div>
     <Navbar color="light" light fixed="true" expand="lg">
         <NavbarBrand className="mr-auto" tag={RRNavLink} to="/">
-        Capstone!
+        ChadsList
         </NavbarBrand>
         {loggedInUser ? (
         <>
@@ -36,6 +36,11 @@ return (
                 <NavItem>
                     <NavLink tag={RRNavLink} to ="/listings/myListings">
                         My Listings
+                    </NavLink>
+                </NavItem>
+                <NavItem>
+                    <NavLink tag={RRNavLink} to = "/myProfile">
+                        My Profile
                     </NavLink>
                 </NavItem>
             </Nav>
