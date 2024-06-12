@@ -80,26 +80,14 @@ export default function ListingForm({loggedInUser})
     
             updateListing(parseInt(id), formData)
                 .then(() => navigate(`../`))
-                .then(data => {
-                    console.log('Success:', data);
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
         } else {
             // For creating a new listing, only use the image if it's present
             if (image) {
                 formData.append("formFile", image);
             }
     
-            createListing(formData)
-                .then(() => navigate("/Listings"))
-                .then(data => {
-                    console.log('Success:', data);
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
+            createListing(formData).then(() => {navigate("/listings")})
+           
         }
     };
     

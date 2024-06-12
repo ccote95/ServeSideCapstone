@@ -27,9 +27,10 @@ export default function ListingDetails({loggedInUser})
             {!listing?.imageBlob ? (
                     <CardImg
                         src={listing?.productImg}
+                        style={{ height: "400px", objectFit: "scale-down" }}
                     />
                 ) : (
-                    <CardImg src={`data:image/jpeg;base64,${listing?.imageBlob}`} />
+                    <CardImg src={`data:image/jpeg;base64,${listing?.imageBlob}`} style={{ height: "400px", objectFit: "scale-down" }}/>
                 )}
                 <CardImgOverlay className="pe-none">
                     <Badge className="fs-4 "pill>
