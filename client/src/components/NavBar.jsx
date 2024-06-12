@@ -38,6 +38,11 @@ return (
                         My Listings
                     </NavLink>
                 </NavItem>
+                <NavItem>
+                    <NavLink tag={RRNavLink} to = "/myProfile">
+                        My Profile
+                    </NavLink>
+                </NavItem>
             </Nav>
             </Collapse>
             <Button
