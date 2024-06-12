@@ -7,6 +7,7 @@ import LandingPage from "./LandingPage.jsx";
 import ListingDetails from "./Listings/ListingDetails.jsx";
 import CreateListing from "./Listings/CreateListing.jsx";
 import ListingForm from "./Listings/ListingForm.jsx";
+import MyListings from "./Listings/MyListings.jsx";
 
 
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
@@ -56,6 +57,16 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
                   <CreateListing loggedInUser={loggedInUser}/>
                 </AuthorizedRoute>
               }
+          />
+        </Route>
+        <Route path="myListings">
+          <Route
+            index
+            element={
+              <AuthorizedRoute>
+                <MyListings/>
+              </AuthorizedRoute>
+            }
           />
         </Route>
       </Route>
