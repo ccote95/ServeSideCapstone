@@ -141,6 +141,7 @@ export default function ListingForm({loggedInUser})
             <FormGroup>
                 <Label>Content</Label>
                 <Input
+                type="textarea"
                 value={content}
                 required
                 placeholder="Add a description of your itme"
