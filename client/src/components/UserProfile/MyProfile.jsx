@@ -17,7 +17,7 @@ export default function MyProfile({loggedInUser})
     <PageContainer>
         <Card className="w-25 shadow">
             <CardText className="m-auto fs-2">{user?.identityUser.userName}</CardText>
-            <img src={user?.imgLocation}/>
+            <img src={user?.imgLocation}  style={{ height: "200px", objectFit: "contain" }}/>
             <CardBody>
                 <Label className="fw-bold fs-5">First Name:</Label>
                 <CardText className="fs-5">{user?.firstName}</CardText>

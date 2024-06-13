@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import { getById, updateProfile } from "../../managers/userProfileManager.js"
 import PageContainer from "../PageContainer.jsx"
 import { Button, Card, CardBody, CardText, Input, Label } from "reactstrap"
+import { useNavigate } from "react-router-dom"
 
 export default function EditMyProfile({loggedInUser})
 {
@@ -11,6 +12,8 @@ export default function EditMyProfile({loggedInUser})
     const [lastName, setLastName] = useState()
     const [address, setAddress] = useState()
     const [selectedFile, setSelectedFile] = useState()
+
+    const navigate = useNavigate()
     
 
 
@@ -34,6 +37,7 @@ export default function EditMyProfile({loggedInUser})
 
 
         await updateProfile(formData, user.id)
+        navigate("../")
     }
 
 
@@ -41,6 +45,7 @@ export default function EditMyProfile({loggedInUser})
         <PageContainer>
         <Card className="w-25 shadow">
             <CardText className="m-auto fs-2">{user?.identityUser?.userName}</CardText>
+            <img src={user?.imgLocation} className="" style={{ height: "200px", objectFit: "contain" }}/>
             <CardBody>
                 <Label className="fw-bold fs-5">First Name:</Label>
                 <Input
