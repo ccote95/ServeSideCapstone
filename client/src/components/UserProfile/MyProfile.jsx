@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react"
 import { getById } from "../../managers/userProfileManager.js"
 import PageContainer from "../PageContainer.jsx"
-import { Button, Card,CardBody,CardText,Label } from "reactstrap"
+import { Button, Card,CardBody,CardImg,CardText,Label } from "reactstrap"
+import { useNavigate } from "react-router-dom"
 
 export default function MyProfile({loggedInUser})
 {
     const [user, setUser] = useState()
+
+    const navigate = useNavigate()
 
     useEffect(() => {
         getById(loggedInUser.id).then(setUser)
@@ -14,6 +17,7 @@ export default function MyProfile({loggedInUser})
     <PageContainer>
         <Card className="w-25 shadow">
             <CardText className="m-auto fs-2">{user?.identityUser.userName}</CardText>
+            <img src={user?.imgLocation}  style={{ height: "200px", objectFit: "contain" }}/>
             <CardBody>
                 <Label className="fw-bold fs-5">First Name:</Label>
                 <CardText className="fs-5">{user?.firstName}</CardText>
@@ -25,7 +29,7 @@ export default function MyProfile({loggedInUser})
                 <CardText className="fs-5">{user?.address}</CardText>
             </CardBody>
             <div className="d-flex gap-2 justify-content-end mb-1 me-1" >
-                <Button>Edit</Button>
+                <Button onClick={() => {navigate(`/myProfile/edit`)}}>Edit</Button>
                 <Button>Payment Info</Button>
             </div>
         </Card>
