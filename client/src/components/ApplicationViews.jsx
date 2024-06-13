@@ -80,7 +80,7 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
                 <MyProfile loggedInUser={loggedInUser}/>
               </AuthorizedRoute>
             }/>
-            <Route path=":id">
+            <Route path="edit">
               <Route
                 index
                 element={
