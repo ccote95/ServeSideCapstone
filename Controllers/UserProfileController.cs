@@ -55,9 +55,10 @@ public class UserProfileController : ControllerBase
             }
 
             userProfile.ImgLocation = $"/uploads/{image.FileName}";
-            await _dbContext.SaveChangesAsync();
 
         }
+
+        await _dbContext.SaveChangesAsync();
         return Ok(userProfile);
 
     }

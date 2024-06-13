@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { getById } from "../../managers/userProfileManager.js"
 import PageContainer from "../PageContainer.jsx"
-import { Button, Card,CardBody,CardText,Label } from "reactstrap"
+import { Button, Card,CardBody,CardImg,CardText,Label } from "reactstrap"
 import { useNavigate } from "react-router-dom"
 
 export default function MyProfile({loggedInUser})
@@ -17,6 +17,7 @@ export default function MyProfile({loggedInUser})
     <PageContainer>
         <Card className="w-25 shadow">
             <CardText className="m-auto fs-2">{user?.identityUser.userName}</CardText>
+            <img src={user?.imgLocation}/>
             <CardBody>
                 <Label className="fw-bold fs-5">First Name:</Label>
                 <CardText className="fs-5">{user?.firstName}</CardText>
