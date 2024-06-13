@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 
-import { getById } from "../../managers/userProfileManager.js"
+import { getById, updateProfile } from "../../managers/userProfileManager.js"
 import PageContainer from "../PageContainer.jsx"
 import { Button, Card, CardBody, CardText, Input, Label } from "reactstrap"
 
@@ -16,13 +16,14 @@ export default function EditMyProfile({loggedInUser})
 
     useEffect(() => {
         getById(loggedInUser.id).then(user => {
+            setUser(user)
             setFirstName(user.firstName)
             setLastName(user.lastName)
             setAddress(user.address)
         })
     },[])
 
-    const handleSave = () => {
+    const handleSave = async (e) => {
         e.preventDefault()
 
         const formData = new FormData();
@@ -30,6 +31,9 @@ export default function EditMyProfile({loggedInUser})
         formData.append("firstName", firstName)
         formData.append("lastName", lastName)
         formData.append("address", address)
+
+
+        await updateProfile(formData, user.id)
     }
 
 
@@ -54,12 +58,12 @@ export default function EditMyProfile({loggedInUser})
                 <Input
                     type="text"
                     value={address}
-                    onChange={(e) => {setAddress    (e.target.value)}}
+                    onChange={(e) => {setAddress(e.target.value)}}
                 />
                  <Label className="fw-bold fs-5">Profile Image:</Label>
                  <Input
                     type="file"
-                    onChange={(e) => {setSelectedFile(e.target.value)}}
+                    onChange={(e) => {setSelectedFile(e.target.files[0])}}
                 />
                     
             </CardBody>

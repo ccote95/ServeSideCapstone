@@ -25,7 +25,7 @@ public class UserProfileController : ControllerBase
         .FirstOrDefault(up => up.Id == id));
     }
 
-    [HttpPut]
+    [HttpPut("{id}")]
     public async Task<IActionResult> UpdateProfile(int id, [FromForm] IFormFile image, [FromForm] string firstName, [FromForm] string lastName, [FromForm] string address)
     {
         UserProfile userProfile = _dbContext.UserProfiles
