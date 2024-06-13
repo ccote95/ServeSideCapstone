@@ -10,6 +10,7 @@ export default function EditMyProfile({loggedInUser})
     const [firstName, setFirstName] = useState()
     const [lastName, setLastName] = useState()
     const [address, setAddress] = useState()
+    const [selectedFile, setSelectedFile] = useState()
     
 
 
@@ -20,6 +21,16 @@ export default function EditMyProfile({loggedInUser})
             setAddress(user.address)
         })
     },[])
+
+    const handleSave = () => {
+        e.preventDefault()
+
+        const formData = new FormData();
+        formData.append("image", selectedFile)
+        formData.append("firstName", firstName)
+        formData.append("lastName", lastName)
+        formData.append("address", address)
+    }
 
 
     return(
@@ -45,9 +56,16 @@ export default function EditMyProfile({loggedInUser})
                     value={address}
                     onChange={(e) => {setAddress    (e.target.value)}}
                 />
+                 <Label className="fw-bold fs-5">Profile Image:</Label>
+                 <Input
+                    type="file"
+                    onChange={(e) => {setSelectedFile(e.target.value)}}
+                />
+                    
             </CardBody>
             <div className="d-flex gap-2 justify-content-end mb-1 me-1" >
-                <Button>Save</Button>
+                <Button onClick={handleSave}>Save</Button>
+                <Button>Cancel</Button>
             </div>
         </Card>
     </PageContainer>
