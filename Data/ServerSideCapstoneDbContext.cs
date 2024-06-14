@@ -18,6 +18,9 @@ public class ServerSideCapstoneDbContext : IdentityDbContext<IdentityUser>
     public DbSet<Listing> Listing { get; set; }
     public DbSet<IdentityRole> IdentityRoles { get; set; }
     public DbSet<Category> Categories { get; set; }
+    public DbSet<PaymentDetails> PaymentDetails { get; set; }
+    public DbSet<PlacedOrder> PlacedOrders { get; set; }
+    public DbSet<ShoppingCart> ShoppingCarts { get; set; }
 
     public DbSet<ListingCategory> ListingCategory { get; set; }
 

@@ -10,6 +10,7 @@ import ListingForm from "./Listings/ListingForm.jsx";
 import MyListings from "./Listings/MyListings.jsx";
 import MyProfile from "./UserProfile/MyProfile.jsx";
 import EditMyProfile from "./UserProfile/EditMyProfile.jsx";
+import ShoppingCart from "./ShoppingCart/ShoppingCart.jsx";
 
 
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
@@ -90,6 +91,17 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
                 }
               />
             </Route>
+      </Route>
+      <Route path="shoppingCart">
+        <Route
+          index
+          element={
+            <AuthorizedRoute loggedInUser={loggedInUser}>
+              <ShoppingCart loggedInUser={loggedInUser}/>
+            </AuthorizedRoute>
+          }
+        />
+
       </Route>
       
         <Route
