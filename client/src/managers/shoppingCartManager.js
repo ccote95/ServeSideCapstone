@@ -1,7 +1,11 @@
 const _apiUrl = "/api/shoppingCart"
 
-export const addToCart = (id) => {
-    return fetch(`${_apiUrl}?id=${id}`, {
+export const addToCart = (id, userId) => {
+    return fetch(`${_apiUrl}?id=${id}&userId=${userId}`, {
         method: "POST"
     })
+}
+
+export const getAllCartsById = (id) => {
+    return fetch(`${_apiUrl}/${id}`).then(res => res.json())
 }

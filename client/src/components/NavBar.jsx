@@ -43,6 +43,11 @@ return (
                         My Profile
                     </NavLink>
                 </NavItem>
+                <NavItem>
+                    <NavLink tag={RRNavLink} to="/shoppingCart">
+                        Shopping Cart
+                    </NavLink>
+                </NavItem>
             </Nav>
             </Collapse>
             <Button

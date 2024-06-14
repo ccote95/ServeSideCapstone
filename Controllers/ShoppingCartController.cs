@@ -19,14 +19,15 @@ public class ShoppingCartController : ControllerBase
 
 
     [HttpPost]
-    public IActionResult AddToCart(int id)
+    public IActionResult AddToCart(int id, int userId)
     {
         Listing newCartItem = _dbContext.Listing
         .FirstOrDefault(l => l.Id == id);
 
         ShoppingCart shoppingCart = new ShoppingCart()
         {
-            listingId = newCartItem.Id,
+            UserProfileId = userId,
+            ListingId = newCartItem.Id,
             Total = newCartItem.Price
         };
 
@@ -34,5 +35,12 @@ public class ShoppingCartController : ControllerBase
         _dbContext.SaveChanges();
 
         return NoContent();
+    }
+
+    [HttpGet("{id}")]
+    public IActionResult GetAllById(int id)
+    {
+        return Ok(_dbContext.ShoppingCarts
+        .Where(sc => sc.UserProfileId == id).ToList());
     }
 }

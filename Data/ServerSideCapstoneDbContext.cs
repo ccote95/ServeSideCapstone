@@ -42,6 +42,11 @@ public class ServerSideCapstoneDbContext : IdentityDbContext<IdentityUser>
             .WithMany(c => c.ListingCategories)
             .HasForeignKey(lc => lc.CategoryId);
 
+            
+
+
+
+
 
 
         modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole

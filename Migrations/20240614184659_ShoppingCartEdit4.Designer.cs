@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ServerSideCapstone.Data;
@@ -11,9 +12,11 @@ using ServerSideCapstone.Data;
 namespace ServerSideCapstone.Migrations
 {
     [DbContext(typeof(ServerSideCapstoneDbContext))]
-    partial class ServerSideCapstoneDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240614184659_ShoppingCartEdit4")]
+    partial class ShoppingCartEdit4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

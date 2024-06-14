@@ -64,7 +64,7 @@ export default function ListingDetails({loggedInUser})
                 <div>
                 <Button className="me-2" 
                 style={{width: "11%", float: "right"}}
-                onClick={() => {addToCart(listing.id)}}>Add to Cart</Button>
+                onClick={() => {addToCart(listing.id, loggedInUser.id)}}>Add to Cart</Button>
                 </div>
                <div className="d-flex flex-row flex-wrap mt-3 w-100 gap-2 justify-content-md-end " >
                 

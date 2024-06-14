@@ -23,4 +23,6 @@ public class UserProfile
             return $"{FirstName} {LastName}";
         }
     }
+
+    public ShoppingCart ShoppingCart { get; set; }
 }
