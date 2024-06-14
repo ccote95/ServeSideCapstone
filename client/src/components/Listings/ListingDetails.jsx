@@ -3,6 +3,7 @@ import PageContainer from "../FlexContainer.jsx"
 import { Badge, Button, Card, CardBody, CardImg, CardImgOverlay } from "reactstrap"
 import { useEffect, useState } from "react"
 import {  deleteListing, getListingById } from "../../managers/listingManger.js"
+import { addToCart } from "../../managers/shoppingCartManager.js"
 
 export default function ListingDetails({loggedInUser})
 {
@@ -60,6 +61,11 @@ export default function ListingDetails({loggedInUser})
                 <CardBody className=" m-auto">
                     {listing?.content}
                 </CardBody>
+                <div>
+                <Button className="me-2" 
+                style={{width: "11%", float: "right"}}
+                onClick={() => {addToCart(listing.id)}}>Add to Cart</Button>
+                </div>
                <div className="d-flex flex-row flex-wrap mt-3 w-100 gap-2 justify-content-md-end " >
                 
                 {listing?.userProfile.id == loggedInUser.id && (
