@@ -1,17 +1,15 @@
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
+using ServerSideCapstone.Models.DTOs;
 
 namespace ServerSideCapstone.Models;
 
-public class ShoppingCart
+public class ShoppingCartDTO
 {
-    [Key]
     public int Id { get; set; }
-    [ForeignKey("UserProfile")]
     public int UserProfileId { get; set; }
-    public UserProfile UserProfile { get; set; }
+    public UserProfileForShoppingCartDTO UserProfile { get; set; }
     public int ListingId { get; set; }
-    public Listing Listing { get; set; }
+    public ListingDTO Listing { get; set; }
     public decimal Total { get; set; }
 }
