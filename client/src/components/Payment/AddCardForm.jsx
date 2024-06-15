@@ -1,12 +1,15 @@
 import { useState } from "react";
 import { Button, Form, FormGroup, Input, Label } from "reactstrap";
 import { addNewCard } from "../../managers/paymentDetailsManager.js";
+import { useNavigate } from "react-router-dom";
 
 export default function AddCardForm({loggedInUser})
 {
-    const [cardName, setCardName] = useState("")
+  
     const [cardNumber, setCardNumber] = useState(0)
     const [cardExpiration, setCardExpiration] = useState()
+
+    const navigate = useNavigate()
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -16,15 +19,11 @@ export default function AddCardForm({loggedInUser})
             CreditCardNumber:cardNumber,
             CreditCardExpiration: cardExpiration
         }
-        addNewCard(newCard)
+        addNewCard(newCard).then(() => {navigate("/myProfile/paymentInfo")})
 
     }
     return(
         <Form className="w-50 m-auto mt-4" onSubmit={handleSubmit}>
-            <FormGroup>
-                <Label className="fw-bold">Name on Card</Label>
-                <Input onChange={(e) => {setCardName(e.target.value)}}/>
-            </FormGroup>
             <FormGroup>
                 <Label className="fw-bold">Card Number</Label>
                 <Input onChange={(e) => {setCardNumber(e.target.value)}}/>

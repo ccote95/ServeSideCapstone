@@ -18,7 +18,7 @@ public class PaymentDetailsController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult AddNewCard(PaymentDetailsDTO newCard)
+    public IActionResult AddNewCard(PaymentDetailsForAddingCardDTO newCard)
     {
         PaymentDetails addCard = new PaymentDetails()
         {
@@ -31,5 +31,28 @@ public class PaymentDetailsController : ControllerBase
         _dbContext.SaveChanges();
 
         return Ok(addCard);
+    }
+
+    [HttpGet]
+    public IActionResult GetAllByUserId(int id)
+    {
+        return Ok(_dbContext.PaymentDetails
+        .Include(pd => pd.UserProfile)
+        .Where(pd => pd.UserProfileId == id)
+        .Select(pd => new PaymentDetailsDTO()
+        {
+            Id = pd.Id,
+            UserProfileId = pd.UserProfileId,
+            UserProfile = new UserProfileDTO()
+            {
+                Id = pd.UserProfile.Id,
+                FirstName = pd.UserProfile.FirstName,
+                LastName = pd.UserProfile.LastName,
+                Address = pd.UserProfile.Address
+            },
+            CreditCardNumber = pd.CreditCardNumber,
+            CreditCardExpiration = pd.CreditCardExpiration
+        }).ToList());
+
     }
 }

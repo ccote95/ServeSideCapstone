@@ -1,9 +1,16 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Table } from "reactstrap";
+import { getAllByUserId } from "../../managers/paymentDetailsManager.js";
 
-export default function PaymentInfo()
+export default function PaymentInfo({loggedInUser})
 {
+    const [paymentDetails, setPaymentDetails] = useState()
     const navigate = useNavigate()
+
+    useEffect(() => {
+        getAllByUserId(loggedInUser.id).then(setPaymentDetails)
+    },[loggedInUser])
 
     return(
     <div>
@@ -14,6 +21,7 @@ export default function PaymentInfo()
         <Table>
             <thead>
                 <tr>
+                    <th>#</th>
                     <th>Name</th>
                     <th>Card Number</th>
                     <th>Card Expiration Date</th>
@@ -21,7 +29,18 @@ export default function PaymentInfo()
                     <th></th>
                 </tr>
             </thead>
-            <tbody></tbody>
+            <tbody>
+                {paymentDetails?.map((p, index) => (
+                    <tr key={p.id}>
+                        <th scope="row">{index +1}</th>
+                        <td>{p.userProfile.fullName}</td>
+                        <td>{p.creditCardNumber}</td>
+                        <td>{p.creditCardExpiration}</td>
+                        <td><Button>Edit</Button></td>
+                        <td><Button>Remove</Button></td>
+                    </tr>
+                ))}
+            </tbody>
         </Table>
         </div>
     )
