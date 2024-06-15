@@ -72,4 +72,16 @@ public class ShoppingCartController : ControllerBase
 
         }).ToList());
     }
+
+    [HttpDelete("{id}")]
+    public IActionResult RemoveListingFromCart(int id)
+    {
+        ShoppingCart foundItem = _dbContext.ShoppingCarts
+        .FirstOrDefault(sc => sc.Id == id);
+
+        _dbContext.ShoppingCarts.Remove(foundItem);
+        _dbContext.SaveChanges();
+
+        return NoContent();
+    }
 }
