@@ -1,13 +1,16 @@
 import { useNavigate, useParams } from "react-router-dom"
 import PageContainer from "../FlexContainer.jsx"
-import { Badge, Button, Card, CardBody, CardImg, CardImgOverlay } from "reactstrap"
+import { Badge, Button, Card, CardBody, CardImg, CardImgOverlay} from "reactstrap"
 import { useEffect, useState } from "react"
 import {  deleteListing, getListingById } from "../../managers/listingManger.js"
 import { addToCart } from "../../managers/shoppingCartManager.js"
+import { toast } from "react-toastify"
+import CustomToast from "../PopUps/AddingToCartToast.jsx"
 
 export default function ListingDetails({loggedInUser})
 {
-
+    const [toastOpen, setToastOpen] = useState(false);
+    const [toastMessage, setToastMessage] = useState('');
     const [listing, setListing] = useState()
    
     const navigate = useNavigate()
@@ -21,6 +24,23 @@ export default function ListingDetails({loggedInUser})
     const handleDelete = (id) => {
         deleteListing(parseInt(id)).then(() => {navigate("/listings")})
     }
+
+    const toggleToast = () => setToastOpen(!toastOpen);
+
+    const handleAddToCart = async () => {
+        try {
+            await addToCart(listing.id, loggedInUser.id);
+            setToastMessage("Item added to cart!");
+            setToastOpen(true);
+        } catch (error) {
+            setToastMessage("Failed to add item to cart.");
+            setToastOpen(true);
+        }
+          // Automatically close the toast after 3 seconds
+          setTimeout(() => {
+            setToastOpen(false);
+        }, 3000);
+    };
 
     return(
        <PageContainer>
@@ -64,8 +84,9 @@ export default function ListingDetails({loggedInUser})
                 <div>
                 <Button className="me-2" 
                 style={{width: "11%", float: "right"}}
-                onClick={() => {addToCart(listing.id, loggedInUser.id)}}>Add to Cart</Button>
+                onClick={() => {handleAddToCart()}}> Add To Cart</Button>
                 </div>
+                <CustomToast isOpen={toastOpen} toggle={toggleToast} message={toastMessage} />
                <div className="d-flex flex-row flex-wrap mt-3 w-100 gap-2 justify-content-md-end " >
                 
                 {listing?.userProfile.id == loggedInUser.id && (

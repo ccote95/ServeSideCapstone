@@ -31,7 +31,7 @@ export default function ShoppingCart({loggedInUser})
     }
     
     const handleRemoveItem = (id) => {
-        removeItemFromCart(id,loggedInUser.id).then(refresh())
+        removeItemFromCart(id,loggedInUser.id).then(() => {refresh()})
     }
     return(
         <PageContainer>
