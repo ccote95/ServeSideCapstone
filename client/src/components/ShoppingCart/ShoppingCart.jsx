@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import {  getAllCartsById } from "../../managers/shoppingCartManager.js"
+import {  getAllCartsById, removeItemFromCart } from "../../managers/shoppingCartManager.js"
 import PageContainer from "../FlexContainer.jsx"
 import { Button, Card, CardBody, CardFooter, CardHeader } from "reactstrap"
 import { getById } from "../../managers/userProfileManager.js"
@@ -25,24 +25,31 @@ export default function ShoppingCart({loggedInUser})
         })
         setTotal(cartTotal);
     },[cart])
+
+    const refresh = () => {
+        getAllCartsById(loggedInUser.id).then(setCart)
+    }
     
+    const handleRemoveItem = (id) => {
+        removeItemFromCart(id,loggedInUser.id).then(refresh())
+    }
     return(
         <PageContainer>
-          <Card className="w-25">
+          <Card className="w-50 shadow">
             <CardHeader>
             <h3 >{user?.fullName}'s Cart</h3>
             </CardHeader>
             <CardBody>
                 {cart?.map((c) => {
                     return <div key={c.id} className="d-flex justify-content-between mb-1">
-                        <div className=" fs-4">
+                        <div className=" fs-4 w-50">
                         {c.listing.title} 
                         </div>
                         <div className="fw-bold">
                         ${c.listing.price}
                         </div>
                         <div className="mb-1">
-                        <Button>Remove</Button>
+                        <Button color="danger" onClick={() => {handleRemoveItem(c.id)}}>Remove</Button>
                         </div>
                     </div>
                 })}
@@ -53,7 +60,7 @@ export default function ShoppingCart({loggedInUser})
                         Your Total: ${total}
                     </div>
                     <div>
-                <Button   >Proceed to Checkout</Button>
+                <Button  color="primary" >Proceed to Checkout</Button>
                     </div>
                 </div>
             </CardFooter>

@@ -74,10 +74,10 @@ public class ShoppingCartController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    public IActionResult RemoveListingFromCart(int id)
+    public IActionResult RemoveListingFromCart(int id, int userProfileId)
     {
         ShoppingCart foundItem = _dbContext.ShoppingCarts
-        .FirstOrDefault(sc => sc.Id == id);
+        .FirstOrDefault(sc => sc.Id == id && sc.UserProfileId == userProfileId);
 
         _dbContext.ShoppingCarts.Remove(foundItem);
         _dbContext.SaveChanges();
