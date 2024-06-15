@@ -7,6 +7,6 @@ public class PaymentDetails
 {
     public int Id { get; set; }
     public int UserProfileId { get; set; }
-    public int CreditCardNumber { get; set; }
+    public string CreditCardNumber { get; set; }
     public DateTime CreditCardExpiration { get; set; }
 }
