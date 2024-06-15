@@ -45,6 +45,14 @@ return (
                 </NavItem>
             </Nav>
             </Collapse>
+            <Nav>
+                <NavItem>
+                    <NavLink className="me-4" tag={RRNavLink} to="/shoppingCart">
+                    🛒
+                    </NavLink>
+                </NavItem>
+
+            </Nav>
             <Button
             color="primary"
             onClick={(e) => {

@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
+using ServerSideCapstone.Models.DTOs;
 
 namespace ServerSideCapstone.Models;
 
@@ -23,4 +24,7 @@ public class UserProfile
             return $"{FirstName} {LastName}";
         }
     }
+
+    public List<ShoppingCart> ShoppingCart { get; set; }
+
 }
