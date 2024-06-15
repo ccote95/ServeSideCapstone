@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace ServerSideCapstone.Models;
 
-public class PaymentDetails
+public class PaymentDetailsDTO
 {
     public int Id { get; set; }
     public int UserProfileId { get; set; }
