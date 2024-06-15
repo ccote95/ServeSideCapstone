@@ -11,6 +11,7 @@ import MyListings from "./Listings/MyListings.jsx";
 import MyProfile from "./UserProfile/MyProfile.jsx";
 import EditMyProfile from "./UserProfile/EditMyProfile.jsx";
 import ShoppingCart from "./ShoppingCart/ShoppingCart.jsx";
+import PaymentInfo from "./Payment/PaymentInfo.jsx";
 
 
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
@@ -87,6 +88,16 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
                 element={
                   <AuthorizedRoute loggedInUser={loggedInUser}>
                     <EditMyProfile loggedInUser={loggedInUser}/>
+                  </AuthorizedRoute>
+                }
+              />
+            </Route>
+            <Route path="paymentInfo">
+              <Route
+                index
+                element={
+                  <AuthorizedRoute loggedInUser={loggedInUser}>
+                    <PaymentInfo loggedInUser={loggedInUser}/>
                   </AuthorizedRoute>
                 }
               />
