@@ -8,7 +8,7 @@ const CustomToast = ({ isOpen, toggle, message }) => {
                 <ToastHeader toggle={toggle}>
                     Notification
                 </ToastHeader>
-                <ToastBody>
+                <ToastBody className=" bg-success" style={{color: "white"}}>
                     {message}
                 </ToastBody>
             </Toast>
