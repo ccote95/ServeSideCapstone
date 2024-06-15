@@ -3,11 +3,9 @@ using Microsoft.AspNetCore.Identity;
 
 namespace ServerSideCapstone.Models;
 
-public class PaymentDetails
+public class PaymentDetailsForAddingCardDTO
 {
-    public int Id { get; set; }
     public int UserProfileId { get; set; }
-    public UserProfile UserProfile { get; set; }
     public string CreditCardNumber { get; set; }
     public DateTime CreditCardExpiration { get; set; }
 }

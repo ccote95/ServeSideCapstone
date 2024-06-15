@@ -30,7 +30,7 @@ export default function MyProfile({loggedInUser})
             </CardBody>
             <div className="d-flex gap-2 justify-content-end mb-1 me-1" >
                 <Button onClick={() => {navigate(`/myProfile/edit`)}}>Edit</Button>
-                <Button>Payment Info</Button>
+                <Button onClick={() => {navigate(`/myProfile/paymentInfo`)}}>Payment Info</Button>
             </div>
         </Card>
     </PageContainer>
