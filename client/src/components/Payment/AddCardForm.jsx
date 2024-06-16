@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Button, Form, FormGroup, Input, Label } from "reactstrap";
-import { addNewCard, getByCardsId } from "../../managers/paymentDetailsManager.js";
+import { addNewCard, getByCardsId, updateCardDetails } from "../../managers/paymentDetailsManager.js";
 import { useNavigate, useParams } from "react-router-dom";
 
 export default function AddCardForm({loggedInUser})
@@ -11,7 +11,7 @@ export default function AddCardForm({loggedInUser})
     const [cardExpiration, setCardExpiration] = useState()
 
     const navigate = useNavigate()
-
+    
     const formatDate = (date) => {
         const d = new Date(date);
         const year = d.getFullYear();
@@ -32,13 +32,18 @@ export default function AddCardForm({loggedInUser})
 
     const handleSubmit = (e) => {
         e.preventDefault()
-
-        const newCard = {
+        const card = {
             UserProfileId: loggedInUser.id,
             CreditCardNumber:cardNumber,
             CreditCardExpiration: cardExpiration
         }
-        addNewCard(newCard).then(() => {navigate("/myProfile/paymentInfo")})
+        if(id){
+            updateCardDetails(id,card).then(() => {navigate("/myProfile/paymentInfo")})
+        }
+        else{
+
+            addNewCard(card).then(() => {navigate("/myProfile/paymentInfo")})
+        }
 
     }
     return(

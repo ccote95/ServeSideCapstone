@@ -11,4 +11,5 @@ public class PaymentDetailsDTO
     public UserProfileDTO UserProfile { get; set; }
     public string CreditCardNumber { get; set; }
     public DateTime CreditCardExpiration { get; set; }
+    public string FormattedCreateDateTime => CreditCardExpiration.Date.ToString("MM-dd-yyyy");
 }
