@@ -13,3 +13,7 @@ export const addNewCard = (newCard) => {
 export const getAllByUserId = (id) => {
     return fetch(`${_apiUrl}?id=${id}`).then(res => res.json())
 }
+
+export const getByCardsId = (id) => {
+    return fetch(`${_apiUrl}/${id}`).then(res => res.json())
+}
