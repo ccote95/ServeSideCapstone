@@ -36,7 +36,7 @@ export default function PaymentInfo({loggedInUser})
                         <td>{p.userProfile.fullName}</td>
                         <td>{p.creditCardNumber}</td>
                         <td>{p.creditCardExpiration}</td>
-                        <td><Button>Edit</Button></td>
+                        <td><Button onClick={() => {navigate(`${p.id}`)}}>Edit</Button></td>
                         <td><Button>Remove</Button></td>
                     </tr>
                 ))}

@@ -1,15 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Form, FormGroup, Input, Label } from "reactstrap";
 import { addNewCard } from "../../managers/paymentDetailsManager.js";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function AddCardForm({loggedInUser})
 {
+    const {id} = useParams()
   
     const [cardNumber, setCardNumber] = useState(0)
     const [cardExpiration, setCardExpiration] = useState()
 
     const navigate = useNavigate()
+
+     useEffect(() => {
+
+    },[id])
 
     const handleSubmit = (e) => {
         e.preventDefault()
