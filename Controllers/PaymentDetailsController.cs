@@ -70,4 +70,17 @@ public class PaymentDetailsController : ControllerBase
 
         .FirstOrDefault(pd => pd.Id == id));
     }
+
+    [HttpPut("{id}")]
+    public IActionResult UpdateCardDetails(int id, PaymentDetailsDTO updateCard)
+    {
+        PaymentDetails cardToUpdate = _dbContext.PaymentDetails.FirstOrDefault(pd => pd.Id == id);
+
+        cardToUpdate.CreditCardNumber = updateCard.CreditCardNumber;
+        cardToUpdate.CreditCardExpiration = updateCard.CreditCardExpiration;
+
+        _dbContext.SaveChanges();
+
+        return NoContent();
+    }
 }
