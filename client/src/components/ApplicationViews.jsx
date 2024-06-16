@@ -102,6 +102,16 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
                   </AuthorizedRoute>
                 }
               />
+                <Route path=":id">
+                  <Route
+                    index
+                    element={
+                      <AuthorizedRoute loggedInUser={loggedInUser}>
+                        <AddCardForm loggedInUser={loggedInUser}/>
+                      </AuthorizedRoute>
+                    }
+                  />
+                </Route>
               <Route path="addCard">
                 <Route
                   index

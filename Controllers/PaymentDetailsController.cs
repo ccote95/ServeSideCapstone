@@ -55,4 +55,32 @@ public class PaymentDetailsController : ControllerBase
         }).ToList());
 
     }
+
+    [HttpGet("{id}")]
+    public IActionResult GetCardById(int id)
+    {
+        return Ok(_dbContext.PaymentDetails
+        .Select(pd => new PaymentDetailsDTO()
+        {
+            Id = pd.Id,
+            UserProfileId = pd.UserProfileId,
+            CreditCardNumber = pd.CreditCardNumber,
+            CreditCardExpiration = pd.CreditCardExpiration
+        })
+
+        .FirstOrDefault(pd => pd.Id == id));
+    }
+
+    [HttpPut("{id}")]
+    public IActionResult UpdateCardDetails(int id, PaymentDetailsDTO updateCard)
+    {
+        PaymentDetails cardToUpdate = _dbContext.PaymentDetails.FirstOrDefault(pd => pd.Id == id);
+
+        cardToUpdate.CreditCardNumber = updateCard.CreditCardNumber;
+        cardToUpdate.CreditCardExpiration = updateCard.CreditCardExpiration;
+
+        _dbContext.SaveChanges();
+
+        return NoContent();
+    }
 }
