@@ -4,7 +4,6 @@ import { Badge, Button, Card, CardBody, CardImg, CardImgOverlay } from "reactstr
 import { useEffect, useState } from "react";
 import { deleteListing, getListingById } from "../../managers/listingManger.js";
 import { addToCart } from "../../managers/shoppingCartManager.js";
-import { toast } from "react-toastify";
 import CustomToast from "../PopUps/AddingToCartToast.jsx";
 
 export default function ListingDetails({ loggedInUser }) {

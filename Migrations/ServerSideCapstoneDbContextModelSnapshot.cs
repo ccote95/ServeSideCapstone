@@ -107,7 +107,7 @@ namespace ServerSideCapstone.Migrations
                         {
                             Id = 1,
                             Content = "Item for sale 1",
-                            CreatedOn = new DateTime(2024, 6, 17, 15, 53, 27, 452, DateTimeKind.Local).AddTicks(9787),
+                            CreatedOn = new DateTime(2024, 6, 20, 12, 51, 58, 946, DateTimeKind.Local).AddTicks(9554),
                             Price = 199.99m,
                             ProductImg = "https://m.media-amazon.com/images/I/61DbVExME8L._AC_UF1000,1000_QL80_.jpg",
                             Title = "Ps2 for sale!",
@@ -117,7 +117,7 @@ namespace ServerSideCapstone.Migrations
                         {
                             Id = 2,
                             Content = "Brand new smartphone.",
-                            CreatedOn = new DateTime(2024, 6, 14, 15, 53, 27, 452, DateTimeKind.Local).AddTicks(9899),
+                            CreatedOn = new DateTime(2024, 6, 17, 12, 51, 58, 946, DateTimeKind.Local).AddTicks(9748),
                             Price = 299.99m,
                             ProductImg = "https://cdn.thewirecutter.com/wp-content/media/2023/10/smartphone-2048px-4861.jpg?auto=webp&quality=75&width=1024",
                             Title = "Smartphone for sale",
@@ -127,7 +127,7 @@ namespace ServerSideCapstone.Migrations
                         {
                             Id = 3,
                             Content = "Gently used laptop in excellent condition.",
-                            CreatedOn = new DateTime(2024, 6, 7, 15, 53, 27, 452, DateTimeKind.Local).AddTicks(9903),
+                            CreatedOn = new DateTime(2024, 6, 10, 12, 51, 58, 946, DateTimeKind.Local).AddTicks(9752),
                             Price = 799.99m,
                             ProductImg = "https://i5.walmartimages.com/seo/HP-Stream-14-Laptop-Intel-Celeron-N4000-4GB-SDRAM-32GB-eMMC-Office-365-1-yr-Brilliant-Black_d579aa66-7e24-4eb2-9686-521be769a755_2.09283250bd5d2a12834c2d4aaca652dd.jpeg",
                             Title = "Laptop for sale",
@@ -137,7 +137,7 @@ namespace ServerSideCapstone.Migrations
                         {
                             Id = 4,
                             Content = "Hand made wooden table",
-                            CreatedOn = new DateTime(2024, 6, 11, 15, 53, 27, 452, DateTimeKind.Local).AddTicks(9905),
+                            CreatedOn = new DateTime(2024, 6, 14, 12, 51, 58, 946, DateTimeKind.Local).AddTicks(9755),
                             Price = 399.99m,
                             ProductImg = "https://i.ebayimg.com/images/g/DasAAOSwZwRj0qTG/s-l1200.webp",
                             Title = "Wooden Table",
@@ -272,13 +272,13 @@ namespace ServerSideCapstone.Migrations
                         {
                             Id = "dbc40bc6-0829-4ac5-a3ed-180f5e916a5f",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "cfd4c16d-15e3-4fb5-ac42-62077d342355",
+                            ConcurrencyStamp = "daf3a8b2-8cb3-46d9-8888-7cee0c9264a2",
                             Email = "admina@strator.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAEM3AyWK37GGqFrtXyH+QfN7VXJlN/bmqpF73WyCrw9t+4wbdSC6bOMXT7CzSA1GDJA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEKX9AyiN6FuxppY4CHbVbvX3g4ror/xZdMBUg3/4FajZGQ34Eal24viTIDMX9WfFzQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "42eb6209-81f1-4cfe-821c-3dd8b73e75a7",
+                            SecurityStamp = "4be61a75-1321-41e4-9fa5-01b10fab6122",
                             TwoFactorEnabled = false,
                             UserName = "Administrator"
                         });
@@ -417,16 +417,18 @@ namespace ServerSideCapstone.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreditCardExperation")
+                    b.Property<DateTime>("CreditCardExpiration")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<int>("CreditCardNumber")
-                        .HasColumnType("integer");
+                    b.Property<string>("CreditCardNumber")
+                        .HasColumnType("text");
 
                     b.Property<int>("UserProfileId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserProfileId");
 
                     b.ToTable("PaymentDetails");
                 });
@@ -470,16 +472,11 @@ namespace ServerSideCapstone.Migrations
                     b.Property<int>("UserProfileId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("UserProfileId1")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ListingId");
 
                     b.HasIndex("UserProfileId");
-
-                    b.HasIndex("UserProfileId1");
 
                     b.ToTable("ShoppingCarts");
                 });
@@ -606,6 +603,17 @@ namespace ServerSideCapstone.Migrations
                     b.Navigation("Listing");
                 });
 
+            modelBuilder.Entity("ServerSideCapstone.Models.PaymentDetails", b =>
+                {
+                    b.HasOne("ServerSideCapstone.Models.UserProfile", "UserProfile")
+                        .WithMany()
+                        .HasForeignKey("UserProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("UserProfile");
+                });
+
             modelBuilder.Entity("ServerSideCapstone.Models.ShoppingCart", b =>
                 {
                     b.HasOne("Listing", "Listing")
@@ -615,14 +623,10 @@ namespace ServerSideCapstone.Migrations
                         .IsRequired();
 
                     b.HasOne("ServerSideCapstone.Models.UserProfile", "UserProfile")
-                        .WithMany()
+                        .WithMany("ShoppingCart")
                         .HasForeignKey("UserProfileId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("ServerSideCapstone.Models.UserProfile", null)
-                        .WithMany("ShoppingCart")
-                        .HasForeignKey("UserProfileId1");
 
                     b.Navigation("Listing");
 

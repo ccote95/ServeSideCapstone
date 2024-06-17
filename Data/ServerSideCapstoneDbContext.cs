@@ -43,9 +43,8 @@ public class ServerSideCapstoneDbContext : IdentityDbContext<IdentityUser>
             .HasForeignKey(lc => lc.CategoryId);
 
         modelBuilder.Entity<ShoppingCart>()
-            .HasOne(sc => sc.UserProfile)
-            .WithMany()
-            .HasForeignKey(sc => sc.UserProfileId);
+            .HasOne(sc => sc.UserProfile);
+
 
 
 

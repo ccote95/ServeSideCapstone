@@ -13,6 +13,7 @@ import EditMyProfile from "./UserProfile/EditMyProfile.jsx";
 import ShoppingCart from "./ShoppingCart/ShoppingCart.jsx";
 import PaymentInfo from "./Payment/PaymentInfo.jsx";
 import AddCardForm from "./Payment/AddCardForm.jsx";
+import Checkout from "./ShoppingCart/Checkout.jsx";
 
 
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
@@ -130,6 +131,14 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
           element={
             <AuthorizedRoute loggedInUser={loggedInUser}>
               <ShoppingCart loggedInUser={loggedInUser}/>
+            </AuthorizedRoute>
+          }
+        />
+        <Route
+          path="checkout"
+          element={
+            <AuthorizedRoute loggedInUser={loggedInUser}>
+              <Checkout loggedInUser={loggedInUser}/>
             </AuthorizedRoute>
           }
         />
