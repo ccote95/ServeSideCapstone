@@ -4,12 +4,15 @@ import PageContainer from "../FlexContainer.jsx"
 import { Button, Card, CardBody, CardFooter, CardHeader } from "reactstrap"
 import { getById } from "../../managers/userProfileManager.js"
 import { useNavigate } from "react-router-dom"
+import ConfirmDelete from "../PopUps/ConfirmDelete.jsx";
 
 export default function ShoppingCart({loggedInUser})
 {
     const [cart, setCart] = useState()
     const [total, setTotal] = useState(0)
     const [user, setUser] = useState()
+    const [itemToDelete, setItemToDelete] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false)
 
     const navigate = useNavigate()
 
@@ -36,6 +39,25 @@ export default function ShoppingCart({loggedInUser})
     const handleRemoveItem = (id) => {
         removeItemFromCart(id,loggedInUser.id).then(() => {refresh()})
     }
+
+    const handleConfirmDelete = () => {
+        if (itemToDelete) {
+            handleRemoveItem(itemToDelete);
+            setIsModalOpen(false);
+            setItemToDelete(null);
+        }
+    };
+
+    const toggleModal = () => {
+        setIsModalOpen(!isModalOpen)
+    }
+
+    const openConfirmDeleteModal = (id) => {
+        setItemToDelete(id);
+        setIsModalOpen(true);
+    };
+
+
     return(
         <PageContainer>
           <Card className="w-50 shadow">
@@ -52,7 +74,7 @@ export default function ShoppingCart({loggedInUser})
                         ${c.listing.price}
                         </div>
                         <div className="mb-1">
-                        <Button color="danger" onClick={() => {handleRemoveItem(c.id)}}>Remove</Button>
+                        <Button color="danger" onClick={() => { openConfirmDeleteModal(c.id)}}>Remove</Button>
                         </div>
                     </div>
                 })}
@@ -68,6 +90,12 @@ export default function ShoppingCart({loggedInUser})
                 </div>
             </CardFooter>
           </Card>
+          <ConfirmDelete 
+          isOpen={isModalOpen}
+          toggle={toggleModal}
+          confirmDelete={handleConfirmDelete}
+          typeName={"Item"}/>
+          
         </PageContainer>
     )
     
