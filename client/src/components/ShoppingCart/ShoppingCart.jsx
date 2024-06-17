@@ -3,12 +3,15 @@ import {  getAllCartsById, removeItemFromCart } from "../../managers/shoppingCar
 import PageContainer from "../FlexContainer.jsx"
 import { Button, Card, CardBody, CardFooter, CardHeader } from "reactstrap"
 import { getById } from "../../managers/userProfileManager.js"
+import { useNavigate } from "react-router-dom"
 
 export default function ShoppingCart({loggedInUser})
 {
     const [cart, setCart] = useState()
     const [total, setTotal] = useState(0)
     const [user, setUser] = useState()
+
+    const navigate = useNavigate()
 
 
 
@@ -60,7 +63,7 @@ export default function ShoppingCart({loggedInUser})
                         Your Total: ${total}
                     </div>
                     <div>
-                <Button  color="primary" >Proceed to Checkout</Button>
+                <Button onClick={() => {navigate("checkout")}} color="primary" >Proceed to Checkout</Button>
                     </div>
                 </div>
             </CardFooter>
