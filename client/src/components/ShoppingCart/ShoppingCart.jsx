@@ -93,7 +93,9 @@ export default function ShoppingCart({loggedInUser})
           <ConfirmDelete 
           isOpen={isModalOpen}
           toggle={toggleModal}
-          confirmDelete={handleConfirmDelete}/>
+          confirmDelete={handleConfirmDelete}
+          typeName={"Item"}/>
+          
         </PageContainer>
     )
     
