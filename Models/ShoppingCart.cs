@@ -8,7 +8,6 @@ public class ShoppingCart
 {
     [Key]
     public int Id { get; set; }
-    [ForeignKey("UserProfile")]
     public int UserProfileId { get; set; }
     public UserProfile UserProfile { get; set; }
     public int ListingId { get; set; }

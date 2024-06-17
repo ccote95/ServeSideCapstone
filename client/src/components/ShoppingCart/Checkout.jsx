@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom"
 import PageContainer from "../PageContainer.jsx"
 import { Button, Card, CardBody, CardFooter, CardHeader, CardText, Input, Label } from "reactstrap"
 import { getAllByUserId } from "../../managers/paymentDetailsManager.js"
+import { placeOrder } from "../../managers/placedOrderManager.js"
+import CustomToast from "../PopUps/AddingToCartToast.jsx"
 
 export default function Checkout({loggedInUser})
 {
@@ -13,6 +15,9 @@ export default function Checkout({loggedInUser})
     const [user, setUser] = useState()
     const [cards, setCard] = useState()
     const [chosenCard, setChosenCard] = useState()
+    const [toastOpen, setToastOpen] = useState(false);
+    const [toastMessage, setToastMessage] = useState('');
+    const [isFailed, setIsFailed]= useState(false)
 
     const navigate = useNavigate()
 
@@ -33,12 +38,42 @@ export default function Checkout({loggedInUser})
         setTotal(cartTotal);
     },[cart])
 
+    const toggleToast = () => setToastOpen(!toastOpen);
+
         // Function to mask the credit card number
-        const maskCreditCardNumber = (number) => {
-            const str = number.toString();
-            const last4 = str.slice(-4);
-            return '**** **** **** ' + last4;
-        };
+    const maskCreditCardNumber = (number) => {
+        const str = number.toString();
+        const last4 = str.slice(-4);
+        return '**** **** **** ' + last4;
+    };
+
+    const handlePlaceOrder =  () => {
+        let success = false
+        placeOrder(chosenCard,cart, loggedInUser.id).then((res) => {
+            if(res.status === 400)
+                {
+                    setToastMessage("Failed to process order!");
+                    setToastOpen(true);
+                    setIsFailed(true);
+                    return 
+                }
+            setToastMessage("Order successfully placed!");
+            setToastOpen(true);
+            success = true;
+        });
+         
+            
+        
+         // Automatically close the toast after 3 seconds
+        setTimeout(() => {
+            setToastOpen(false);
+            if(success){
+                navigate("/listings")
+            }
+        }, 3000);
+    }
+
+        
 
 
     return(
@@ -74,8 +109,9 @@ export default function Checkout({loggedInUser})
                         Your Total: ${total}
                     </div>
                     <div>
-                <Button onClick={() => {navigate("checkout")}} color="primary" >Proceed to Checkout</Button>
+                <Button onClick={handlePlaceOrder} color="primary" >Place Order</Button>
                     </div>
+                    <CustomToast isFailed={isFailed} isOpen={toastOpen} toggle={toggleToast} message={toastMessage} />
                 </div>
                 </CardFooter>
             </Card>

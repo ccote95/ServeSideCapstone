@@ -18,10 +18,15 @@ public class PlacedOrderController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult PlaceOrder(int chosenCard, List<ShoppingCart> cart)
+    public IActionResult PlaceOrder(int chosenCard, int id, List<ShoppingCart> cart)
     {
-        // List<ShoppingCart> foundCarts = _dbContext.ShoppingCarts
-        // .Where(sc => sc.UserProfileId == id).ToList();
+        List<ShoppingCart> foundItems = _dbContext.ShoppingCarts
+        .Where(sc => sc.UserProfileId == id).ToList();
+
+        if (cart.Count() == 0)
+        {
+            return BadRequest();
+        }
 
         foreach (ShoppingCart item in cart)
         {
@@ -33,10 +38,12 @@ public class PlacedOrderController : ControllerBase
             };
             _dbContext.PlacedOrders.Add(placedOrder);
         }
-        _dbContext.SaveChanges();
 
-        foreach (ShoppingCart item in cart)
+        // _dbContext.ShoppingCarts.RemoveRange(0, count);
+
+        foreach (ShoppingCart item in foundItems)
         {
+
             _dbContext.ShoppingCarts.Remove(item);
         }
         _dbContext.SaveChanges();
