@@ -5,11 +5,13 @@ import { useEffect, useState } from "react";
 import { deleteListing, getListingById } from "../../managers/listingManger.js";
 import { addToCart } from "../../managers/shoppingCartManager.js";
 import CustomToast from "../PopUps/AddingToCartToast.jsx";
+import ConfirmDelete from "../PopUps/ConfirmDelete.jsx";
 
 export default function ListingDetails({ loggedInUser }) {
     const [toastOpen, setToastOpen] = useState(false);
     const [toastMessage, setToastMessage] = useState('');
     const [listing, setListing] = useState();
+    const [isModalOpen, setIsModalOpen] = useState(false)
 
     const navigate = useNavigate();
 
@@ -19,7 +21,7 @@ export default function ListingDetails({ loggedInUser }) {
         getListingById(parseInt(id)).then(setListing);
     }, []);
 
-    const handleDelete = (id) => {
+    const handleDelete = () => {
         deleteListing(parseInt(id)).then(() => { navigate("/listings"); });
     };
 
@@ -39,6 +41,10 @@ export default function ListingDetails({ loggedInUser }) {
             setToastOpen(false);
         }, 3000);
     };
+
+    const toggleModal = () => {
+        setIsModalOpen(!isModalOpen)
+    }
 
     return (
         <PageContainer>
@@ -92,7 +98,7 @@ export default function ListingDetails({ loggedInUser }) {
                 <div className="d-flex flex-row flex-wrap mt-3 w-100 gap-2 justify-content-md-end ">
                     {listing?.userProfile.id === loggedInUser.id && (
                         <>
-                            <Button className="me-2 mb-1" onClick={() => handleDelete(listing.id)}>
+                            <Button className="me-2 mb-1" onClick={toggleModal}>
                                 DELETE
                             </Button>
                             <Button className="me-2 mb-1" onClick={() => { navigate("edit"); }}>
@@ -102,6 +108,12 @@ export default function ListingDetails({ loggedInUser }) {
                     )}
                 </div>
             </Card>
+            <ConfirmDelete
+                isOpen = {isModalOpen}
+                toggle = {toggleModal}
+                confirmDelete={handleDelete}
+                typeName={"listing"}
+            />
         </PageContainer>
     );
 }
