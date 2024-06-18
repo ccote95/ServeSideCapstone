@@ -1,22 +1,52 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Table } from "reactstrap";
-import { getAllByUserId } from "../../managers/paymentDetailsManager.js";
+import { getAllByUserId, removeCard } from "../../managers/paymentDetailsManager.js";
+import ConfirmDelete from "../PopUps/ConfirmDelete.jsx";
 
 export default function PaymentInfo({loggedInUser})
 {
     const [paymentDetails, setPaymentDetails] = useState()
+    const [cardToDelete, setCardToDelete] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false)
+
     const navigate = useNavigate()
 
     useEffect(() => {
         getAllByUserId(loggedInUser.id).then(setPaymentDetails)
     },[loggedInUser])
 
+    const refresh = () => {
+        getAllByUserId(loggedInUser.id).then(setPaymentDetails)
+    }
+    
+
+    const handleCardRemove = (id) => {
+        removeCard(id).then(() => {refresh()})
+    }
+
+    const handleConfirmDelete = () => {
+        if (cardToDelete) {
+            handleCardRemove(cardToDelete);
+            setIsModalOpen(false);
+            setCardToDelete(null);
+        }
+    };
+
+    const openConfirmDeleteModal = (id) => {
+        setCardToDelete(id);
+        setIsModalOpen(true);
+    };
+
+    const toggleModal = () => {
+        setIsModalOpen(!isModalOpen)
+    }
+
     return(
     <div>
         <div className="d-flex justify-content-between align-items-center mt-2 mb-3 me-2">
             <h2>Payment Details</h2>
-            <Button onClick={() => {navigate("addCard")}}>Add New Card</Button>
+            <Button color="success" onClick={() => {navigate("addCard")}}>Add New Card</Button>
         </div>
         <Table>
             <thead>
@@ -36,12 +66,18 @@ export default function PaymentInfo({loggedInUser})
                         <td>{p.userProfile.fullName}</td>
                         <td>{p.creditCardNumber}</td>
                         <td>{p.formattedCreateDateTime}</td>
-                        <td><Button onClick={() => {navigate(`${p.id}`)}}>Edit</Button></td>
-                        <td><Button>Remove</Button></td>
+                        <td><Button color="primary" onClick={() => {navigate(`${p.id}`)}}>Edit</Button></td>
+                        <td><Button color="danger" onClick={() => {openConfirmDeleteModal(p.id)}}>Remove</Button></td>
                     </tr>
                 ))}
             </tbody>
         </Table>
+        <ConfirmDelete
+        isOpen={isModalOpen}
+        toggle={toggleModal}
+        confirmDelete={handleConfirmDelete}
+        typeName={"Card"}
+        />
         </div>
     )
 }

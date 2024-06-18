@@ -18,6 +18,7 @@ public class PaymentDetailsController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize]
     public IActionResult AddNewCard(PaymentDetailsForAddingCardDTO newCard)
     {
         PaymentDetails addCard = new PaymentDetails()
@@ -34,6 +35,7 @@ public class PaymentDetailsController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize]
     public IActionResult GetAllByUserId(int id)
     {
         return Ok(_dbContext.PaymentDetails
@@ -57,6 +59,7 @@ public class PaymentDetailsController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [Authorize]
     public IActionResult GetCardById(int id)
     {
         return Ok(_dbContext.PaymentDetails
@@ -72,6 +75,7 @@ public class PaymentDetailsController : ControllerBase
     }
 
     [HttpPut("{id}")]
+    [Authorize]
     public IActionResult UpdateCardDetails(int id, PaymentDetailsDTO updateCard)
     {
         PaymentDetails cardToUpdate = _dbContext.PaymentDetails.FirstOrDefault(pd => pd.Id == id);
@@ -79,6 +83,18 @@ public class PaymentDetailsController : ControllerBase
         cardToUpdate.CreditCardNumber = updateCard.CreditCardNumber;
         cardToUpdate.CreditCardExpiration = updateCard.CreditCardExpiration;
 
+        _dbContext.SaveChanges();
+
+        return NoContent();
+    }
+
+    [HttpDelete("{id}")]
+    [Authorize]
+    public IActionResult RemoveCard(int id)
+    {
+        PaymentDetails foundCard = _dbContext.PaymentDetails.FirstOrDefault(pd => pd.Id == id);
+
+        _dbContext.PaymentDetails.Remove(foundCard);
         _dbContext.SaveChanges();
 
         return NoContent();

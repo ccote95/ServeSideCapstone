@@ -27,3 +27,9 @@ export const updateCardDetails = (id, updateCard) => {
         body: JSON.stringify(updateCard)
     })
 }
+
+export const removeCard = (id) => {
+    return fetch(`${_apiUrl}/${id}`, {
+        method: "DELETE",
+    })
+}
