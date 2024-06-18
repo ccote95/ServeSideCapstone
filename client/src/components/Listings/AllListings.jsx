@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { getAll } from "../../managers/listingManger.js"
-import { Button, Card, CardBody, CardImg, CardLink, CardSubtitle, CardTitle, Input } from "reactstrap"
+import { Button, Card, CardBody, CardImg, CardLink, CardSubtitle, CardText, CardTitle, Input } from "reactstrap"
 import FlexContainer from "../FlexContainer.jsx"
 import { useNavigate } from "react-router-dom"
 import { getAllCategories } from "../../managers/categoryManager.js"
@@ -62,7 +62,7 @@ export default function AllListings()
             </Input>
             <FlexContainer>
             {filteredListings?.map((l) => (
-                <Card className="w-25 d-flex flex-column  shadow" key={l.id} style={{maxWidth: "1200px",  height: "400px"}}>
+                <Card className="w-25 d-flex flex-column  shadow" key={l.id} style={{maxWidth: "1200px"}}>
                     <CardLink href={`listings/${l.id}`}>
                     {!l.imageBlob ? (
                     <CardImg
@@ -79,13 +79,12 @@ export default function AllListings()
                 )}
                     </CardLink>
                     <CardBody>
-                        <CardTitle className="m-1 fs-1 fw-bold">
+                        <CardTitle title={l.title} className="m-1 fs-1 fw-bold text-truncate" >
                             {l.title}
                         </CardTitle>
-                    <CardSubtitle className="m-1 fs-2">
+                    <CardText className="m-1 fs-2">
                         ${l.price}
-                    </CardSubtitle>
-                    
+                    </CardText>
                     </CardBody>
                 </Card>
             ))}
