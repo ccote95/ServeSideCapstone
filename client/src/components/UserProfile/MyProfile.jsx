@@ -29,8 +29,8 @@ export default function MyProfile({loggedInUser})
                 <CardText className="fs-5">{user?.address}</CardText>
             </CardBody>
             <div className="d-flex gap-2 justify-content-end mb-1 me-1" >
-                <Button onClick={() => {navigate(`/myProfile/edit`)}}>Edit</Button>
-                <Button onClick={() => {navigate(`/myProfile/paymentInfo`)}}>Payment Info</Button>
+                <Button color= "primary"onClick={() => {navigate(`/myProfile/edit`)}}>Edit</Button>
+                <Button color="primary" onClick={() => {navigate(`/myProfile/paymentInfo`)}}>Payment Info</Button>
             </div>
         </Card>
     </PageContainer>
