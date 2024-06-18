@@ -31,11 +31,18 @@ export default function AddCardForm({loggedInUser})
             }
     },[id])
 
+    const handleCardNumberChange = (e) => {
+        const rawValue = e.target.rawValue;
+        if (rawValue.length <= 16) {
+            setCardNumber(rawValue);
+        }
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault()
         const card = {
             UserProfileId: loggedInUser.id,
-            CreditCardNumber:cardNumber,
+            CreditCardNumber:cardNumber.replace(/\s+/g, ''),
             CreditCardExpiration: cardExpiration
         }
         if(id){
@@ -53,10 +60,14 @@ export default function AddCardForm({loggedInUser})
                 <Label className="fw-bold">Card Number</Label>
                 <Cleave
                     value={cardNumber}
-                    options={{ creditCard: true }}
+                    options={{
+                        creditCard: false, // Disable automatic credit card detection
+                        blocks: [4, 4, 4, 4],
+                        delimiter: '-'
+                    }}
                     onChange={(e) => setCardNumber(e.target.rawValue)}
                     className="form-control"
-                    placeholder="1234 5678 9012 3456"
+                    placeholder="1234-5678-9012-3456"
                 />
             </FormGroup>
             <FormGroup>
