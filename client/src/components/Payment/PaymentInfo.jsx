@@ -46,7 +46,7 @@ export default function PaymentInfo({loggedInUser})
     <div>
         <div className="d-flex justify-content-between align-items-center mt-2 mb-3 me-2">
             <h2>Payment Details</h2>
-            <Button onClick={() => {navigate("addCard")}}>Add New Card</Button>
+            <Button color="success" onClick={() => {navigate("addCard")}}>Add New Card</Button>
         </div>
         <Table>
             <thead>
@@ -66,8 +66,8 @@ export default function PaymentInfo({loggedInUser})
                         <td>{p.userProfile.fullName}</td>
                         <td>{p.creditCardNumber}</td>
                         <td>{p.formattedCreateDateTime}</td>
-                        <td><Button onClick={() => {navigate(`${p.id}`)}}>Edit</Button></td>
-                        <td><Button onClick={() => {openConfirmDeleteModal(p.id)}}>Remove</Button></td>
+                        <td><Button color="primary" onClick={() => {navigate(`${p.id}`)}}>Edit</Button></td>
+                        <td><Button color="danger" onClick={() => {openConfirmDeleteModal(p.id)}}>Remove</Button></td>
                     </tr>
                 ))}
             </tbody>
