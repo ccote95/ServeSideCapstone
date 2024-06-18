@@ -51,6 +51,7 @@ export default function ListingDetails({ loggedInUser }) {
             <Card className="shadow" style={{ width: "60%" }}>
                 {!listing?.imageBlob ? (
                     <CardImg
+                    className="mt-1"
                         src={listing?.productImg}
                         style={{ height: "400px", objectFit: "scale-down" }}
                     />
@@ -86,22 +87,25 @@ export default function ListingDetails({ loggedInUser }) {
                     {listing?.content}
                 </CardBody>
                 <div>
+                    {listing?.userProfile.id != loggedInUser.id && (
                     <Button
                         className="me-2"
-                        style={{ width: "11%", float: "right" }}
+                        style={{ float: "right" }}
                         onClick={handleAddToCart}
+                        color="primary"
                     >
                         Add To Cart
                     </Button>
+                    )}
                 </div>
                 <CustomToast isOpen={toastOpen} toggle={toggleToast} message={toastMessage} />
                 <div className="d-flex flex-row flex-wrap mt-3 w-100 gap-2 justify-content-md-end ">
                     {listing?.userProfile.id === loggedInUser.id && (
                         <>
-                            <Button className="me-2 mb-1" onClick={toggleModal}>
+                            <Button className="me-2 mb-1" color="danger" onClick={toggleModal}>
                                 DELETE
                             </Button>
-                            <Button className="me-2 mb-1" onClick={() => { navigate("edit"); }}>
+                            <Button className="me-2 mb-1" color="primary" onClick={() => { navigate("edit"); }}>
                                 Edit
                             </Button>
                         </>
