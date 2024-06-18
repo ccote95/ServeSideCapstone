@@ -68,7 +68,7 @@ export default function AllListings()
                     <CardImg
                         className="mt-1"
                         src={l.productImg}
-                       style={{ height: "200px", objectFit: "contain" }}
+                        style={{ height: "200px", objectFit: "contain" }}
                     />
                 ) : (
                     <CardImg 

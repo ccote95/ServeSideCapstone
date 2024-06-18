@@ -51,6 +51,7 @@ export default function ListingDetails({ loggedInUser }) {
             <Card className="shadow" style={{ width: "60%" }}>
                 {!listing?.imageBlob ? (
                     <CardImg
+                    className="mt-1"
                         src={listing?.productImg}
                         style={{ height: "400px", objectFit: "scale-down" }}
                     />
