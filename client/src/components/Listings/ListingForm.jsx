@@ -15,6 +15,7 @@ export default function ListingForm({loggedInUser})
     const [imagePreview, setImagePreview] = useState()
     const [chosenCategories, setChosenCategories] = useState([])
     const [originalImage, setOriginalImage] = useState()
+    const [formErrors, setFormErrors] = useState({});
 
     const navigate = useNavigate()
 
@@ -40,6 +41,27 @@ export default function ListingForm({loggedInUser})
         }
     },[])
 
+    const validateForm = () => {
+        const errors = {};
+        if (!title.trim()) {
+            errors.title = "Title is required";
+        }
+        if (chosenCategories.length === 0) {
+            errors.categories = "Please choose at least one category";
+        }
+        if (!content.trim()) {
+            errors.content = "Content is required";
+        }
+        if (!price) {
+            errors.price = "Price is required";
+        }
+        if (!image && !originalImage) {
+            errors.image = "Image is required";
+        }
+        setFormErrors(errors);
+        return Object.keys(errors).length === 0; // Return true if no errors
+    };
+
     const handleCheckBoxChange = (categoryId) => {
         const selectedCategories = [...chosenCategories];
         const index = selectedCategories.indexOf(categoryId)
@@ -56,38 +78,41 @@ export default function ListingForm({loggedInUser})
 
     const onSubmit = (e) => {
         e.preventDefault();
-        const formData = new FormData();
+        if(validateForm()){
+
+            const formData = new FormData();
+            
+            formData.append("title", title);
+            chosenCategories.forEach(id => formData.append('CategoryIds', id));
+            formData.append("content", content);
+            formData.append("price", price);
+            formData.append("userProfileId", loggedInUser.id);
         
-        formData.append("title", title);
-        chosenCategories.forEach(id => formData.append('CategoryIds', id));
-        formData.append("content", content);
-        formData.append("price", price);
-        formData.append("userProfileId", loggedInUser.id);
-    
-        if (id) {
-            // If an image is chosen, use it; otherwise, use the original image
-            if (image) {
-                formData.append("formFile", image);
-            } else if (originalImage) {
-                const byteCharacters = atob(originalImage);
-                const byteNumbers = new Array(byteCharacters.length);
-                for (let i = 0; i < byteCharacters.length; i++) {
-                    byteNumbers[i] = byteCharacters.charCodeAt(i);
+            if (id) {
+                // If an image is chosen, use it; otherwise, use the original image
+                if (image) {
+                    formData.append("formFile", image);
+                } else if (originalImage) {
+                    const byteCharacters = atob(originalImage);
+                    const byteNumbers = new Array(byteCharacters.length);
+                    for (let i = 0; i < byteCharacters.length; i++) {
+                        byteNumbers[i] = byteCharacters.charCodeAt(i);
+                    }
+                    const byteArray = new Uint8Array(byteNumbers);
+                    formData.append("formFile", new Blob([byteArray]));
                 }
-                const byteArray = new Uint8Array(byteNumbers);
-                formData.append("formFile", new Blob([byteArray]));
+        
+                updateListing(parseInt(id), formData)
+                    .then(() => navigate(`../`))
+            } else {
+                // For creating a new listing, only use the image if it's present
+                if (image) {
+                    formData.append("formFile", image);
+                }
+        
+                createListing(formData).then(() => {navigate("/listings")})
+               
             }
-    
-            updateListing(parseInt(id), formData)
-                .then(() => navigate(`../`))
-        } else {
-            // For creating a new listing, only use the image if it's present
-            if (image) {
-                formData.append("formFile", image);
-            }
-    
-            createListing(formData).then(() => {navigate("/listings")})
-           
         }
     };
     
@@ -106,6 +131,7 @@ export default function ListingForm({loggedInUser})
                 style={{width: "100%"}}
                 onChange={(e) => {setTitle(e.target.value)}}
                 />
+                 {formErrors.title && <span className="text-danger">{formErrors.title}</span>}
             </FormGroup>
             
             <Label>Category (choose one or more)</Label>
@@ -126,6 +152,9 @@ export default function ListingForm({loggedInUser})
                 </Col>
             ))}
             </Row>
+            {formErrors.categories && (
+                    <span className="text-danger">{formErrors.categories}</span>
+                )}
           
             <FormGroup>
                 <Label>Price</Label>
@@ -137,6 +166,7 @@ export default function ListingForm({loggedInUser})
                  value={price}
                 placeholder="Enter a price (a dollar amount)"
                 onChange={(e) => {setPrice(e.target.value)}}/>
+                 {formErrors.price && <span className="text-danger">{formErrors.price}</span>}
             </FormGroup>
             <FormGroup>
                 <Label>Content</Label>
@@ -146,6 +176,7 @@ export default function ListingForm({loggedInUser})
                 required
                 placeholder="Add a description of your itme"
                 onChange={(e) => {setContent(e.target.value)}}/>
+                {formErrors.content && <span className="text-danger">{formErrors.content}</span>}
             </FormGroup>
             <FormGroup>
                 <Label>Image</Label>
@@ -153,6 +184,7 @@ export default function ListingForm({loggedInUser})
                 type="file"
                
                 onChange={(e) => {setImage(e.target.files[0])}}/>
+                 {formErrors.image && <span className="text-danger">{formErrors.image}</span>}
             </FormGroup>
             {imagePreview && <img src={imagePreview} alt="Preview" style={{ maxWidth: "50%", height: "auto" }} />}
             {id ? (
