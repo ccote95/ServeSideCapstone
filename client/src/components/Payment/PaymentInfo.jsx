@@ -42,6 +42,10 @@ export default function PaymentInfo({loggedInUser})
         setIsModalOpen(!isModalOpen)
     }
 
+    const formatCardNumber = (number) => {
+        return number.replace(/(\d{4})(?=\d)/g, '$1-');
+    };
+
     return(
     <div>
         <div className="d-flex justify-content-between align-items-center mt-2 mb-3 me-2">
@@ -64,7 +68,7 @@ export default function PaymentInfo({loggedInUser})
                     <tr key={p.id}>
                         <th scope="row">{index +1}</th>
                         <td>{p.userProfile.fullName}</td>
-                        <td>{p.creditCardNumber}</td>
+                        <td>{formatCardNumber(p.creditCardNumber)}</td>
                         <td>{p.formattedCreateDateTime}</td>
                         <td><Button color="primary" onClick={() => {navigate(`${p.id}`)}}>Edit</Button></td>
                         <td><Button color="danger" onClick={() => {openConfirmDeleteModal(p.id)}}>Remove</Button></td>

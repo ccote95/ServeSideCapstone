@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import { Button, Form, FormGroup, Input, Label } from "reactstrap";
 import { addNewCard, getByCardsId, updateCardDetails } from "../../managers/paymentDetailsManager.js";
 import { useNavigate, useParams } from "react-router-dom";
+import Cleave from "cleave.js/react";
 
 export default function AddCardForm({loggedInUser})
 {
     const {id} = useParams()
   
-    const [cardNumber, setCardNumber] = useState(0)
+    const [cardNumber, setCardNumber] = useState("")
     const [cardExpiration, setCardExpiration] = useState()
 
     const navigate = useNavigate()
@@ -30,11 +31,18 @@ export default function AddCardForm({loggedInUser})
             }
     },[id])
 
+    const handleCardNumberChange = (e) => {
+        const rawValue = e.target.rawValue;
+        if (rawValue.length <= 16) {
+            setCardNumber(rawValue);
+        }
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault()
         const card = {
             UserProfileId: loggedInUser.id,
-            CreditCardNumber:cardNumber,
+            CreditCardNumber:cardNumber.replace(/\s+/g, ''),
             CreditCardExpiration: cardExpiration
         }
         if(id){
@@ -50,9 +58,16 @@ export default function AddCardForm({loggedInUser})
         <Form className="w-50 m-auto mt-4" onSubmit={handleSubmit}>
             <FormGroup>
                 <Label className="fw-bold">Card Number</Label>
-                <Input 
-                    value={cardNumber} 
-                    onChange={(e) => {setCardNumber(e.target.value)}}
+                <Cleave
+                    value={cardNumber}
+                    options={{
+                        creditCard: false, // Disable automatic credit card detection
+                        blocks: [4, 4, 4, 4],
+                        delimiter: '-'
+                    }}
+                    onChange={(e) => setCardNumber(e.target.rawValue)}
+                    className="form-control"
+                    placeholder="1234-5678-9012-3456"
                 />
             </FormGroup>
             <FormGroup>
