@@ -55,9 +55,6 @@ export default function ListingForm({loggedInUser})
         if (!price) {
             errors.price = "Price is required";
         }
-        if (!image && !originalImage) {
-            errors.image = "Image is required";
-        }
         setFormErrors(errors);
         return Object.keys(errors).length === 0; // Return true if no errors
     };

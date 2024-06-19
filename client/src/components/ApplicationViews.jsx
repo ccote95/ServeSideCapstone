@@ -14,9 +14,18 @@ import ShoppingCart from "./ShoppingCart/ShoppingCart.jsx";
 import PaymentInfo from "./Payment/PaymentInfo.jsx";
 import AddCardForm from "./Payment/AddCardForm.jsx";
 import Checkout from "./ShoppingCart/Checkout.jsx";
+import { useEffect, useState } from "react";
+import { getAllCartsById } from "../managers/shoppingCartManager.js";
 
 
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
+
+  const [cartItemCount, setCartItemCount] = useState(0);
+  
+
+
+
+ 
   return (
     <Routes>
       <Route path="/">
@@ -130,7 +139,7 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
           index
           element={
             <AuthorizedRoute loggedInUser={loggedInUser}>
-              <ShoppingCart loggedInUser={loggedInUser}/>
+              <ShoppingCart loggedInUser={loggedInUser} setCartItemCount={setCartItemCount}/>
             </AuthorizedRoute>
           }
         />

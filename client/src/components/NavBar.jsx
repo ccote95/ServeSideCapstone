@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NavLink as RRNavLink } from "react-router-dom";
 import {
 Button,
@@ -11,11 +11,18 @@ NavbarBrand,
 NavbarToggler,
 } from "reactstrap";
 import { logout } from "../managers/authManager";
+import ShoppingCartCount from "./ShoppingCart/ShoppingCartCount.jsx";
+import { getAllCartsById } from "../managers/shoppingCartManager.js";
 
-export default function NavBar({ loggedInUser, setLoggedInUser }) {
+export default function NavBar({ loggedInUser, setLoggedInUser, cartItemCount }) {
 const [open, setOpen] = useState(false);
 
+
 const toggleNavbar = () => setOpen(!open);
+
+
+
+
 
 return (
     <div>
@@ -48,7 +55,7 @@ return (
             <Nav>
                 <NavItem>
                     <NavLink className="me-4" tag={RRNavLink} to="/shoppingCart">
-                    🛒
+                <ShoppingCartCount loggedInUser={loggedInUser} count={cartItemCount}/>
                     </NavLink>
                 </NavItem>
 
