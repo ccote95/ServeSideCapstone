@@ -6,7 +6,7 @@ import { getById } from "../../managers/userProfileManager.js"
 import { useNavigate } from "react-router-dom"
 import ConfirmDelete from "../PopUps/ConfirmDelete.jsx";
 
-export default function ShoppingCart({loggedInUser})
+export default function ShoppingCart({loggedInUser, setCartItemCount})
 {
     const [cart, setCart] = useState()
     const [total, setTotal] = useState(0)
@@ -30,7 +30,8 @@ export default function ShoppingCart({loggedInUser})
             cartTotal += c.total
         })
         setTotal(cartTotal);
-    },[cart])
+        setCartItemCount(cart?.length)
+    },[cart, setCartItemCount])
 
     const refresh = () => {
         getAllCartsById(loggedInUser.id).then(setCart)
