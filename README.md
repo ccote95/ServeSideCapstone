@@ -1,6 +1,25 @@
 ### ChadsList
 Everyone has something laying around their house that they would like to get rid of. That's what this application aims to solve, allowing users to register and instantly list items for sale, look at other users listings and purchasing the things they want
-Setup:
+
+### Technologies Used
+- ReactJS
+- ReactStrap
+- EF Core 8.0
+- PostgreSQL 16
+- JavaScript
+- HTNL5
+- CSS
+- Vite
+### Installation & Setup:
+Clone this repository, and ensure you have the following installed on your machine:
+- node
+- npm
+- .Net 8.0
+- PostgreSQL 16
+Then run the following command:
+```
+dotnet tool install --global dotnet-ef --framework net8.0
+```
 1. In the top-level directory of the cloned project on your computer, run `dotnet user-secrets init`
 1. Run `dotnet user-secrets set AdminPassword password` (you can choose a different password if you wish)
 1. Run `dotnet user-secrets set TabloidDbConnectionString 'Host=localhost;Port=5432;Username=postgres;Password=password;Database=Tabloid'`
