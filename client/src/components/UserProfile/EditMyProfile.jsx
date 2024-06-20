@@ -74,7 +74,7 @@ export default function EditMyProfile({loggedInUser})
             </CardBody>
             <div className="d-flex gap-2 justify-content-end mb-1 me-1" >
                 <Button onClick={handleSave}>Save</Button>
-                <Button>Cancel</Button>
+                <Button onClick={() => {navigate("../")}}>Cancel</Button>
             </div>
         </Card>
     </PageContainer>

@@ -28,7 +28,7 @@ return (
     <div>
     <Navbar color="light" light fixed="true" expand="lg">
         <NavbarBrand className="mr-auto" tag={RRNavLink} to="/">
-        ChadsList
+        📜ChadsList 
         </NavbarBrand>
         {loggedInUser ? (
         <>
