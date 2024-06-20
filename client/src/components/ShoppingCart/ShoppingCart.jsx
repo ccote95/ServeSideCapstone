@@ -29,7 +29,7 @@ export default function ShoppingCart({loggedInUser, setCartItemCount})
         cart?.map((c) => {
             cartTotal += c.total
         })
-        setTotal(cartTotal);
+        setTotal(cartTotal.toFixed(2));
         setCartItemCount(cart?.length)
     },[cart, setCartItemCount])
 
