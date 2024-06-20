@@ -15,7 +15,7 @@ export default function Checkout({ loggedInUser }) {
     const [total, setTotal] = useState(0);
     const [user, setUser] = useState();
     const [cards, setCards] = useState([]);
-    const [chosenCard, setChosenCard] = useState();
+    const [chosenCard, setChosenCard] = useState("");
     const [toastOpen, setToastOpen] = useState(false);
     const [toastMessage, setToastMessage] = useState('');
     const [isFailed, setIsFailed] = useState(false);
@@ -78,14 +78,15 @@ export default function Checkout({ loggedInUser }) {
             };
 
             // Function to mask the credit card number
-            const maskCreditCardNumber = (number) => {
+        const maskCreditCardNumber = (number) => {
         const str = number.toString();
         const last4 = str.slice(-4);
         return '**** **** **** ' + last4;
         };
         const handleNewCardAdded = (newCard) => {
+            console.log(newCard)
             refreshCards(); // Refresh the list of cards
-            setChosenCard(newCard.creditCardNumber);
+            setChosenCard(newCard.id);
         };
         
     return (
