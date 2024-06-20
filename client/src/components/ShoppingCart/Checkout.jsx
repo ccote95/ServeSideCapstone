@@ -92,17 +92,17 @@ export default function Checkout({ loggedInUser }) {
     return (
         <PageContainer>
             <Card className="w-25">
-                <CardHeader>
+                <CardHeader className="fw-bold fs-3">
                     Confirm Details
                 </CardHeader>
                 <CardBody>
                     <div className="d-flex">
-                        <Label>Full Name:</Label>
-                        <CardText className="ms-1">{user?.fullName}</CardText>
+                        <Label className="fw-bold fs-4">Full Name:</Label>
+                        <CardText className="ms-1 fs-4">{user?.fullName}</CardText>
                     </div>
                     <div className="d-flex">
-                        <Label>Address:</Label>
-                        <CardText className="ms-1">{user?.address}</CardText>
+                        <Label className="fw-bold fs-4">Address:</Label>
+                        <CardText className="ms-1 fs-4">{user?.address}</CardText>
                     </div>
                 </CardBody>
                 <CardBody>

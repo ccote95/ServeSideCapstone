@@ -12,7 +12,7 @@ NavbarToggler,
 } from "reactstrap";
 import { logout } from "../managers/authManager";
 import ShoppingCartCount from "./ShoppingCart/ShoppingCartCount.jsx";
-import { getAllCartsById } from "../managers/shoppingCartManager.js";
+
 
 export default function NavBar({ loggedInUser, setLoggedInUser, cartItemCount }) {
 const [open, setOpen] = useState(false);
@@ -26,7 +26,7 @@ const toggleNavbar = () => setOpen(!open);
 
 return (
     <div>
-    <Navbar color="light" light fixed="true" expand="lg">
+    <Navbar style={{backgroundColor: "#C2C3C7", borderBottom: "2px solid darkgrey"}} light fixed="true" expand="lg">
         <NavbarBrand className="mr-auto" tag={RRNavLink} to="/">
         📜ChadsList 
         </NavbarBrand>
