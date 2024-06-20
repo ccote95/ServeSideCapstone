@@ -183,7 +183,7 @@ export default function ListingForm({loggedInUser})
                 onChange={(e) => {setImage(e.target.files[0])}}/>
                  {formErrors.image && <span className="text-danger">{formErrors.image}</span>}
             </FormGroup>
-            {imagePreview && <img src={imagePreview} alt="Preview" style={{ maxWidth: "50%", height: "auto" }} />}
+            {imagePreview && <img src={imagePreview} alt="Preview" style={{ maxWidth: "50%", height: "auto", maxHeight: "200px" }} />}
             {id ? (
                 <Button type="submit" style={{float: "right"}} color="primary">Save</Button>
             ) :(

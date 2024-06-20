@@ -7,7 +7,7 @@ export const addNewCard = (newCard) => {
             "Content-Type":"application/json"
         },
         body: JSON.stringify(newCard)
-    })
+    }).then((res) => res.json())
 }
 
 export const getAllByUserId = (id) => {
