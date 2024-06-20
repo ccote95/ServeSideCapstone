@@ -38,7 +38,7 @@ export default function Checkout({ loggedInUser }) {
         cart?.forEach((c) => {
             cartTotal += c.total;
         });
-        setTotal(cartTotal);
+        setTotal(cartTotal.toFixed(2));
     }, [cart]);
 
     const toggleToast = () => setToastOpen(!toastOpen);
