@@ -48,7 +48,7 @@ export default function ListingDetails({ loggedInUser }) {
 
     return (
         <PageContainer>
-            <Card className="shadow" style={{ width: "60%" }}>
+            <Card className="shadow-lg" style={{ width: "60%" }}>
                 {!listing?.imageBlob ? (
                     <CardImg
                     className="mt-1"
