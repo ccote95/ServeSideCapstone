@@ -24,6 +24,7 @@ Navigate to the cloned  directory and run the following:
 ```
 dotnet user-secrets init
 ```
+```
 dotnet user-secrets set 'ServerSideCapstoneDbConnectionString' 'Host=localhost;Port=5432;Username=postgres;Password=<your_postgresql_password>;Database=Capstone'
 ```
 ```
