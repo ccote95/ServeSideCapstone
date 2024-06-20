@@ -1,4 +1,5 @@
-### Server Side Capstone
+### ChadsList
+Everyone has something laying around their house that they would like to get rid of. That's what this application aims to solve, allowing users to register and instantly list items for sale, look at other users listings and purchasing the things they want
 Setup:
 1. In the top-level directory of the cloned project on your computer, run `dotnet user-secrets init`
 1. Run `dotnet user-secrets set AdminPassword password` (you can choose a different password if you wish)
