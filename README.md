@@ -1,4 +1,4 @@
-### ChadsList
+# ChadsList
 Everyone has something laying around their house that they would like to get rid of. That's what this application aims to solve, allowing users to register and instantly list items for sale, look at other users listings and purchasing the things they want
 
 ### Technologies Used
